@@ -54,7 +54,7 @@
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'
     const s = t()
     document.querySelector('.who strong').textContent = s.title
-    document.querySelector('.who span').textContent = s.online
+    document.querySelector('.who span b').textContent = s.online
     input.placeholder = s.placeholder
     document.querySelector('label[for=input]').textContent = s.typeMsg
     composer.querySelector('.send').setAttribute('aria-label', s.send)
@@ -279,6 +279,12 @@
   toggle.addEventListener('click', () => setOpen(!open))
   closeBtn.addEventListener('click', () => { setOpen(false); toggle.focus() })
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) { setOpen(false); toggle.focus() } })
+
+  // The host page tells the widget which language the website is showing.
+  window.addEventListener('message', (e) => {
+    if (e.source !== parent || !e.data || e.data.type !== 'accez-lang') return
+    if ((e.data.lang === 'ar' || e.data.lang === 'en') && e.data.lang !== lang) applyLang(e.data.lang)
+  })
 
   applyLang(lang)
   // Opened straight from a link such as /widget?open=1 (useful for testing).

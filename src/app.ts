@@ -19,6 +19,7 @@ const assets: Record<string, { body: string; type: string }> = {
   '/widget.js': { body: readFileSync(join(WIDGET_DIR, 'widget.js'), 'utf8'), type: 'text/javascript; charset=utf-8' },
 }
 
+const LOGO = readFileSync(join(WIDGET_DIR, 'logo.png'))
 const MAX_BODY = 8 * 1024
 const app = new Hono()
 
@@ -55,6 +56,11 @@ for (const [path, a] of Object.entries(assets)) {
     return c.body(a.body, 200, { 'Content-Type': a.type })
   })
 }
+
+app.get('/logo.png', (c) => {
+  c.header('Cache-Control', 'public, max-age=86400')
+  return c.body(LOGO, 200, { 'Content-Type': 'image/png' })
+})
 
 app.get('/health', (c) => c.json({ ok: true }))
 
