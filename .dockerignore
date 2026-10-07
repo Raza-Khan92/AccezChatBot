@@ -1,0 +1,11 @@
+node_modules
+.env*
+data
+data-*
+.git
+test
+evals
+scripts
+docs
+knowledge/review
+knowledge/candidates

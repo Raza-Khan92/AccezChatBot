@@ -1,0 +1,400 @@
+[
+ {
+  "id": "r1",
+  "q": "What is Accez and what does it actually do for a property manager?",
+  "audience": "pms",
+  "expect": [
+   "What is Accez",
+   "The property management side",
+   "Who is Accez for"
+  ]
+ },
+ {
+  "id": "r2",
+  "q": "I own two apartments and manage them myself. Is Accez too big for me?",
+  "audience": "pms",
+  "expect": [
+   "Is this for me",
+   "Property management Free plan",
+   "I am a property owner, which side is for me"
+  ]
+ },
+ {
+  "id": "r3",
+  "q": "Do you support hotels and serviced apartments?",
+  "audience": "pms",
+  "expect": [
+   "Hotels and serviced apartments",
+   "Is Accez for hotels and serviced apartments",
+   "Does the Accez property management system support hotels and serviced apartments?"
+  ]
+ },
+ {
+  "id": "r7",
+  "q": "Can I start for free without a credit card?",
+  "audience": "pms",
+  "expect": [
+   "Plans overview",
+   "Property management Free plan",
+   "What plans does the Accez property management system offer?"
+  ]
+ },
+ {
+  "id": "r9",
+  "q": "Which booking channels do you connect to, Airbnb and Booking.com?",
+  "audience": "pms",
+  "expect": [
+   "Reservations and channel connections",
+   "Which booking channels do you connect to? Do you support Airbnb, Booking.com or Expedia?",
+   "How many channels can I use?"
+  ]
+ },
+ {
+  "id": "r11",
+  "q": "Do I get an owner portal so my property owners can see their statements?",
+  "audience": "pms",
+  "expect": [
+   "Owners, statements and payouts",
+   "Who is a unit owner in the Accez property management system?",
+   "What does a unit owner see on their dashboard?",
+   "Can owners get statements?"
+  ]
+ },
+ {
+  "id": "r12",
+  "q": "What reports and analytics do I get?",
+  "audience": "pms",
+  "expect": [
+   "What reports and analytics are available?",
+   "What does the property manager dashboard show?"
+  ]
+ },
+ {
+  "id": "r16",
+  "q": "Is the platform available in Arabic?",
+  "audience": "pms",
+  "expect": [
+   "Languages",
+   "Can I use the Accez property management system in Arabic?"
+  ]
+ },
+ {
+  "id": "r17",
+  "q": "What support do I get and how fast do you reply?",
+  "audience": "pms",
+  "expect": [
+   "Contacting support",
+   "What are your support hours, response time and phone number?"
+  ]
+ },
+ {
+  "id": "r18",
+  "q": "Can I collect rent from tenants through Accez?",
+  "audience": "pms",
+  "expect": [
+   "How do I record rent payments?",
+   "How do I create a lease?"
+  ]
+ },
+ {
+  "id": "r19",
+  "q": "Can I run off-plan project sales with installment plans?",
+  "audience": "pms",
+  "expect": [
+   "Is there a pipeline for tracking buyers and calls?",
+   "Can I set up an installment plan for a sale?",
+   "What are projects in the Accez property management system?",
+   "Sales, projects and contracts"
+  ]
+ },
+ {
+  "id": "r21",
+  "q": "I own a hair salon. What is Accez and how does it help me?",
+  "audience": "provider",
+  "expect": [
+   "What is Accez",
+   "The service provider side",
+   "Is a service provider only a salon or barber"
+  ]
+ },
+ {
+  "id": "r22",
+  "q": "I run a pet clinic. Can I join?",
+  "audience": "provider",
+  "expect": [
+   "Is a service provider only a salon or barber",
+   "What kinds of businesses can list on the Accez marketplace?"
+  ]
+ },
+ {
+  "id": "r24",
+  "q": "How much do Starter and Growth cost?",
+  "audience": "provider",
+  "expect": [
+   "How much do the Starter and Growth plans cost per month?",
+   "Service provider plans and prices"
+  ]
+ },
+ {
+  "id": "r27",
+  "q": "How do I sign up as a provider?",
+  "audience": "provider",
+  "expect": [
+   "How do I sign up as a service provider on Accez?",
+   "How to sign up and sign in"
+  ]
+ },
+ {
+  "id": "r28",
+  "q": "Does my business go live straight away or is it approved first?",
+  "audience": "provider",
+  "expect": [
+   "When does my business show up on the marketplace?"
+  ]
+ },
+ {
+  "id": "r31",
+  "q": "Can I take a deposit when customers book?",
+  "audience": "provider",
+  "expect": [
+   "Can I ask customers to pay a deposit?"
+  ]
+ },
+ {
+  "id": "r32",
+  "q": "Can customers set up repeat appointments?",
+  "audience": "provider",
+  "expect": [
+   "Can customers make a booking repeat?"
+  ]
+ },
+ {
+  "id": "r33",
+  "q": "Can my staff log in and see only their own bookings?",
+  "audience": "provider",
+  "expect": [
+   "What can my staff see and do in the portal?",
+   "Can I add staff members to my provider account?"
+  ]
+ },
+ {
+  "id": "r36",
+  "q": "Can customers reschedule their appointment?",
+  "audience": "provider",
+  "expect": [
+   "Can customers reschedule a booking?"
+  ]
+ },
+ {
+  "id": "r37",
+  "q": "Can I remove a bad review?",
+  "audience": "provider",
+  "expect": [
+   "Can I delete or report a review I disagree with?"
+  ]
+ },
+ {
+  "id": "r40",
+  "q": "Is the provider portal available in Arabic?",
+  "audience": "provider",
+  "expect": [
+   "Languages"
+  ]
+ },
+ {
+  "id": "r41",
+  "q": "How do I get an account for the resident portal?",
+  "audience": "resident",
+  "expect": [
+   "How do I get access to the Accez resident portal?"
+  ]
+ },
+ {
+  "id": "r42",
+  "q": "How do I check in online before I arrive?",
+  "audience": "resident",
+  "expect": [
+   "How do I check in online?",
+   "What files can I upload for check-in?"
+  ]
+ },
+ {
+  "id": "r43",
+  "q": "Can I pay with Apple Pay or Google Pay?",
+  "audience": "resident",
+  "expect": [
+   "Can I pay with Apple Pay or Google Pay?",
+   "How do I pay for my booking?"
+  ]
+ },
+ {
+  "id": "r44",
+  "q": "My card was declined. What now?",
+  "audience": "resident",
+  "expect": [
+   "What if my payment does not go through?"
+  ]
+ },
+ {
+  "id": "r46",
+  "q": "How do I report a broken tap or air conditioner?",
+  "audience": "resident",
+  "expect": [
+   "How do I report a maintenance problem?"
+  ]
+ },
+ {
+  "id": "r47",
+  "q": "How do I book a cleaning service during my stay?",
+  "audience": "resident",
+  "expect": [
+   "How do I book a service such as cleaning?",
+   "How do I pay for a service?"
+  ]
+ },
+ {
+  "id": "r48",
+  "q": "I see \"Property Assignment Pending\". What does it mean?",
+  "audience": "resident",
+  "expect": [
+   "What does \"Property Assignment Pending\" mean?"
+  ]
+ },
+ {
+  "id": "r49",
+  "q": "How do I pay my rent through the app?",
+  "audience": "resident",
+  "expect": [
+   "How do I view my rental lease or sale contract?"
+  ]
+ },
+ {
+  "id": "r50",
+  "q": "Where is my booking confirmation and check-in link?",
+  "audience": "resident",
+  "expect": [
+   "Which emails will I receive about my booking?",
+   "What happens after I pay on the Accez booking page?"
+  ]
+ },
+ {
+  "id": "r53",
+  "q": "Can I leave a review of my stay?",
+  "audience": "resident",
+  "expect": [
+   "Can I leave a review after my stay?"
+  ]
+ },
+ {
+  "id": "r55",
+  "q": "I forgot my password for the resident portal.",
+  "audience": "resident",
+  "expect": [
+   "What happens if I type the wrong password?",
+   "How do I sign in to the Accez resident portal?"
+  ]
+ },
+ {
+  "id": "r60",
+  "q": "Is Accez a real, registered Saudi company?",
+  "audience": "general",
+  "expect": [
+   "Region and company",
+   "Is Accez legitimate? Is it a scam? Is it reliable? I heard bad things about it."
+  ]
+ },
+ {
+  "id": "r63",
+  "q": "How do I book a demo?",
+  "audience": "general",
+  "expect": [
+   "Request a demo or talk to sales"
+  ]
+ },
+ {
+  "id": "r66",
+  "q": "How do I add a property?",
+  "audience": "general",
+  "expect": [
+   "How do I add a property?",
+   "What is the difference between a Draft and a Published property?"
+  ]
+ },
+ {
+  "id": "r67",
+  "q": "How do I bulk import units from Excel?",
+  "audience": "general",
+  "expect": [
+   "Can I import units from a spreadsheet?"
+  ]
+ },
+ {
+  "id": "r68",
+  "q": "I hit my Free plan limit. What now?",
+  "audience": "general",
+  "expect": [
+   "What happens when I reach a Free plan limit?",
+   "Can I buy extra capacity on a paid plan?"
+  ]
+ },
+ {
+  "id": "r70",
+  "q": "How do I connect Airbnb or Booking.com to my property?",
+  "audience": "general",
+  "expect": [
+   "How do I connect a booking channel?",
+   "How do units map to channels?"
+  ]
+ },
+ {
+  "id": "r71",
+  "q": "How do I invite a staff member?",
+  "audience": "general",
+  "expect": [
+   "How do I add a staff member?"
+  ]
+ },
+ {
+  "id": "r72",
+  "q": "I forgot my password.",
+  "audience": "general",
+  "expect": [
+   "How do I reset or change my password?"
+  ]
+ },
+ {
+  "id": "r74",
+  "q": "How do I request a payout of my balance?",
+  "audience": "general",
+  "expect": [
+   "How do I request a payout from my balance?",
+   "How do I request a payout?"
+  ]
+ },
+ {
+  "id": "r75",
+  "q": "How do I record a rent payment?",
+  "audience": "general",
+  "expect": [
+   "How do I record rent payments?"
+  ]
+ },
+ {
+  "id": "r77",
+  "q": "How do I set my provider opening hours and block a day off?",
+  "audience": "general",
+  "expect": [
+   "How do I set my business hours?",
+   "Can team members add time off?"
+  ]
+ },
+ {
+  "id": "r79",
+  "q": "How do I edit the emails guests receive?",
+  "audience": "general",
+  "expect": [
+   "How do email templates work?",
+   "Which emails can I customise?"
+  ]
+ }
+]

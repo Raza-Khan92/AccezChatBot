@@ -1,0 +1,96 @@
+:root {
+  --blue: #1557e8;
+  --blue-dark: #0f46c0;
+  --ink: #0f172a;
+  --mute: #64748b;
+  --bubble: #eff3f8;
+  --line: #e2e8f0;
+  --danger: #b42318;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: transparent; color: var(--ink); font-size: 16px; }
+[hidden] { display: none !important; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+button, input, select, textarea { font: inherit; }
+
+.app { position: fixed; inset: 0; }
+
+.toggle {
+  position: absolute; right: 18px; bottom: 18px; width: 58px; height: 58px; border: 0; border-radius: 50%;
+  background: var(--blue); color: #fff; display: grid; place-items: center; cursor: pointer;
+  box-shadow: 0 6px 22px rgba(21, 87, 232, 0.55); transition: transform 0.15s ease, background 0.15s ease;
+}
+.toggle:hover { background: var(--blue-dark); transform: scale(1.05); }
+.toggle:focus-visible, .icon-btn:focus-visible, .send:focus-visible, .chip:focus-visible { outline: 3px solid #93b4ff; outline-offset: 2px; }
+
+.panel {
+  position: absolute; top: 8px; left: 8px; right: 8px; bottom: 88px; display: flex; flex-direction: column;
+  background: #fff; border-radius: 22px; overflow: hidden; box-shadow: 0 12px 40px rgba(2, 6, 23, 0.35);
+}
+.head { display: flex; align-items: center; gap: 12px; padding: 16px 18px; background: var(--blue); color: #fff; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; background: rgba(255, 255, 255, 0.22); display: grid; place-items: center; flex: none; }
+.who { display: flex; flex-direction: column; line-height: 1.2; flex: 1; min-width: 0; }
+.who strong { font-size: 18px; }
+.who span { font-size: 14px; opacity: 0.85; }
+.icon-btn { background: transparent; border: 0; color: #fff; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
+.icon-btn:hover { background: rgba(255, 255, 255, 0.15); }
+
+.log { flex: 1; overflow-y: auto; padding: 18px 16px 8px; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
+.msg { max-width: 86%; padding: 12px 16px; border-radius: 18px; line-height: 1.45; font-size: 15.5px; overflow-wrap: anywhere; }
+.msg p { margin: 0; }
+.msg p + p, .msg p + ul, .msg ul + p { margin-top: 8px; }
+.msg ul { margin: 0; padding-left: 20px; }
+.msg a { color: inherit; text-decoration: underline; }
+.msg-bot { align-self: flex-start; background: var(--bubble); border-top-left-radius: 6px; }
+.msg-user { align-self: flex-end; background: var(--blue); color: #fff; border-top-right-radius: 6px; }
+.msg-note { align-self: center; color: var(--mute); font-size: 13px; background: none; padding: 0; }
+
+.typing { align-self: flex-start; display: flex; gap: 5px; padding: 14px 16px; background: var(--bubble); border-radius: 18px; border-top-left-radius: 6px; }
+.typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--mute); animation: blink 1.1s infinite ease-in-out; }
+.typing i:nth-child(2) { animation-delay: 0.15s; }
+.typing i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes blink { 0%, 80%, 100% { opacity: 0.25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 16px 10px; }
+.chips:empty { display: none; }
+.chip { border: 1px solid var(--blue); background: #fff; color: var(--blue); padding: 8px 14px; border-radius: 999px; font-size: 14px; cursor: pointer; }
+.chip:hover { background: #eef3ff; }
+
+.composer { display: flex; gap: 10px; align-items: center; padding: 12px 14px 14px; border-top: 1px solid var(--line); }
+.composer input { flex: 1; min-width: 0; border: 1.5px solid var(--blue); border-radius: 999px; padding: 12px 18px; font-size: 16px; outline: none; color: var(--ink); background: #fff; }
+.composer input:focus { box-shadow: 0 0 0 3px rgba(21, 87, 232, 0.18); }
+.send { flex: none; width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--blue); color: #fff; display: grid; place-items: center; cursor: pointer; }
+.send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.lead { align-self: stretch; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 12px; display: grid; gap: 8px; }
+.lead label { display: grid; gap: 4px; font-size: 13px; color: var(--mute); }
+.lead input, .lead select, .lead textarea { border: 1px solid #cbd5e1; border-radius: 10px; padding: 9px 11px; font-size: 15px; color: var(--ink); background: #fff; width: 100%; }
+.lead textarea { min-height: 64px; resize: vertical; }
+.lead input:focus, .lead select:focus, .lead textarea:focus { outline: 2px solid #93b4ff; border-color: var(--blue); }
+.lead .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.lead .err { color: var(--danger); font-size: 13px; margin: 0; }
+.lead .submit { border: 0; background: var(--blue); color: #fff; padding: 11px 16px; border-radius: 999px; font-weight: 600; cursor: pointer; }
+.lead .submit:disabled { opacity: 0.6; cursor: wait; }
+.lead .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.lead .req { color: var(--danger); font-weight: 600; }
+
+/* The site shows this iframe at 400px wide on desktop and full screen on phones, so width alone cannot tell them apart. */
+@media (max-width: 767px) and (pointer: coarse) {
+  .panel { inset: 0; border-radius: 0; }
+  .app.is-open .toggle { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toggle, .log { transition: none; scroll-behavior: auto; }
+  .typing i { animation: none; opacity: 0.6; }
+}
+
+/* Right-to-left (Arabic): bubbles and fields flip with the document direction. Only the send arrow needs mirroring. */
+[dir="rtl"] .send svg { transform: scaleX(-1); }
+[dir="rtl"] .msg ul { padding-left: 0; padding-right: 20px; }
+
+/* Arabic: system fonts that ship on Mac, Windows and Android (no external download, so the strict CSP stays). */
+[dir="rtl"] { font-family: "Geeza Pro", Tahoma, "Segoe UI", "Noto Sans Arabic", "SF Arabic", system-ui, sans-serif; }
+[dir="rtl"] .msg, [dir="rtl"] .chip, [dir="rtl"] .composer input, [dir="rtl"] .lead { font-size: 16px; line-height: 1.6; }
+[dir="rtl"] .lead label { font-size: 13.5px; }
+.lead .note { margin: 0; font-size: 12px; color: var(--mute); line-height: 1.5; }

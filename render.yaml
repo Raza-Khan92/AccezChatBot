@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: accez-assistant
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: LEAD_SECRET
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: https://www.accez.cloud,https://accez.cloud,http://localhost:3000
+      - key: TRUST_PROXY
+        value: "true"
+      - key: TRUSTED_PROXY_HOPS
+        value: "1"
+      - key: SALESFORCE_ENABLED
+        value: "false"

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accez Assistant</title>
+  <link rel="stylesheet" href="/widget.css">
+</head>
+<body>
+  <div id="app" class="app" data-greeting="__GREETING__">
+    <section id="panel" class="panel" role="dialog" aria-label="Accez Assistant chat" hidden>
+      <header class="head">
+        <div class="avatar" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+        </div>
+        <div class="who"><strong>Accez Assistant</strong><span>Online</span></div>
+        <button id="close" class="icon-btn" type="button" aria-label="Close chat">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </header>
+      <div id="log" class="log" role="log" aria-live="polite" aria-relevant="additions"></div>
+      <div id="chips" class="chips"></div>
+      <form id="composer" class="composer" autocomplete="off">
+        <label for="input" class="sr">Type a message</label>
+        <input id="input" type="text" maxlength="600" placeholder="Type a message..." enterkeyhint="send">
+        <button class="send" type="submit" aria-label="Send message">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+      </form>
+    </section>
+    <button id="toggle" class="toggle" type="button" aria-label="Open chat" aria-expanded="false" aria-controls="panel">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </button>
+  </div>
+  <script src="/widget.js" defer></script>
+</body>
+</html>

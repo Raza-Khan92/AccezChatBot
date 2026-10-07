@@ -1,0 +1,19 @@
+node_modules/
+.env
+.env.*
+!.env.example
+data/
+dist/
+*.log
+.DS_Store
+data-*/
+# Private working notes: raw evidence, product bug dossiers, audits. Never part of a deployable repository.
+knowledge/candidates/
+knowledge/review/
+knowledge/website-corrections.md
+docs/audit/
+*.db-shm
+*.db-wal
+# Not part of the deployed repository
+README.md
+knowledge/decisions.md

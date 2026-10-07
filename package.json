@@ -1,0 +1,39 @@
+{
+  "name": "accez-assistant",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Accez Assistant: retrieval-grounded support and lead-capture chatbot",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "tsx watch --env-file=.env.local src/server.ts",
+    "start": "node --env-file=.env.local --import tsx src/server.ts",
+    "ingest": "tsx --env-file=.env.local scripts/ingest.ts",
+    "eval": "DB_PATH=:memory: GEMINI_MAX_RETRY_WAIT_MS=65000 GEMINI_MAX_ATTEMPTS=8 tsx --env-file=.env.local scripts/eval.ts",
+    "leads": "tsx scripts/leads.ts",
+    "chats": "tsx scripts/chats.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "dev:test": "DATA_DIR=data-test INDEX_PATH=data-test/index.json EMBED_MODEL=gemini-embedding-001 CHAT_MODEL=gemini-3.1-flash-lite tsx watch --env-file=.env.local src/server.ts",
+    "ingest:test": "DATA_DIR=data-test INDEX_PATH=data-test/index.json EMBED_MODEL=gemini-embedding-001 tsx --env-file=.env.local scripts/ingest.ts",
+    "retrieval-eval": "tsx --env-file=.env.local scripts/retrieval-eval.ts",
+    "retrieval-eval:test": "DATA_DIR=data-test INDEX_PATH=data-test/index.json EMBED_MODEL=gemini-embedding-001 tsx --env-file=.env.local scripts/retrieval-eval.ts",
+    "forget": "tsx scripts/forget.ts",
+    "start:prod": "node --import tsx src/server.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.3",
+    "better-sqlite3": "^13.0.3",
+    "hono": "^4.13.13",
+    "tsx": "^4.23.15",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^26.6.4",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  }
+}
