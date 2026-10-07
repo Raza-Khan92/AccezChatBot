@@ -128,8 +128,10 @@ export async function chat(sessionId: string, message: string): Promise<ChatResu
     const chunkIds = used.map((h) => `${h.chunk.id}@${h.score.toFixed(3)}`).join(' | ')
     const context = used.map((h) => h.chunk)
     // Asking "are you a property manager or a provider?" is only useful when the facts really differ by side.
-    const sides = new Set(context.filter((c) => c.kind === 'fact' && c.audience !== 'general').map((c) => c.audience))
-    const askWhichSide = audience === 'general' && sides.size >= 2
+    // A side-neutral (general) chunk at the top means one answer fits everyone. Otherwise the best three facts must span both sides.
+    const facts = context.filter((c) => c.kind === 'fact').slice(0, 3)
+    const sides = new Set(facts.filter((c) => c.audience !== 'general').map((c) => c.audience))
+    const askWhichSide = audience === 'general' && facts[0]?.audience !== 'general' && sides.size >= 2
     const turns = alternate([
       ...history.slice(-6).map((m): Turn => ({ role: m.role === 'user' ? 'user' : 'model', text: m.content })),
       { role: 'user', text: P.buildUserTurn({ boundary, audience, intent: cls.intent, lang, askWhichSide, context, message: clean }) },
