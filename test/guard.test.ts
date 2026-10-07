@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { bannedPhrase, internalLeak, leaksScaffolding, looksLikeCodeOrFile, redact, sanitizeUserText, stripRoleQuestion, takeNoAnswer, toAscii, ungroundedNumbers } from '../src/guard.js'
+import { arabicBrand, bannedPhrase, internalLeak, leaksScaffolding, looksLikeCodeOrFile, redact, sanitizeUserText, stripRoleQuestion, takeNoAnswer, toAscii, ungroundedNumbers } from '../src/guard.js'
 
 describe('ungroundedNumbers', () => {
   const ctx = 'The Free plan costs SAR 0 and charges a platform fee of 10%. Professional connects up to 3 channels. Starter is SAR 1,750.'
@@ -180,3 +180,12 @@ describe('sanitizeUserText', () => {
   })
 })
 
+
+describe('arabicBrand', () => {
+  it('writes the brand in Arabic script but leaves domains and emails alone', () => {
+    expect(arabicBrand('فريق Accez. زر https://www.accez.cloud و hello@accez.cloud')).toBe('فريق أكسيز. زر https://www.accez.cloud و hello@accez.cloud')
+    expect(arabicBrand('مرحبا بك في Accez Cloud')).toBe('مرحبا بك في أكسيز كلاود')
+    expect(arabicBrand('Accez.cloud')).toBe('Accez.cloud')
+    expect(arabicBrand('منصة أكسيز (Accez) هي')).toBe('منصة أكسيز هي')
+  })
+})

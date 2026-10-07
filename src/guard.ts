@@ -157,3 +157,9 @@ export const NO_ANSWER_TOKEN = '[[NO_ANSWER]]'
 export function takeNoAnswer(raw: string): { text: string; flagged: boolean } {
   return { text: raw.replaceAll(NO_ANSWER_TOKEN, '').trim(), flagged: raw.includes(NO_ANSWER_TOKEN) }
 }
+
+/** In Arabic replies the brand is written أكسيز. Domains and email addresses (accez.cloud) are lower case and stay as they are. */
+export function arabicBrand(text: string): string {
+  return text.replace(/\bAccez Cloud\b/g, 'أكسيز كلاود').replace(/\bAccez\b(?![\w/@-]|\.(?:cloud|com)\b)/g, 'أكسيز')
+    .replace(/أكسيز\s*\(\s*أكسيز\s*\)/g, 'أكسيز')
+}

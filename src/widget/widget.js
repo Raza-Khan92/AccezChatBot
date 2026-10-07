@@ -25,14 +25,14 @@
       thanks: (n) => `Thank you, ${n}. We've received your details and the Accez team will follow up with you.`,
     },
     ar: {
-      title: 'مساعد Accez', online: 'متصل', placeholder: 'اكتب رسالتك...', typeMsg: 'اكتب رسالتك', send: 'إرسال الرسالة',
-      close: 'إغلاق المحادثة', open: 'فتح المحادثة', dialog: 'محادثة مساعد Accez', typing: 'مساعد Accez يكتب الآن',
-      greeting: 'مرحبًا بك! أنا مساعد Accez، ويسعدني مساعدتك اليوم. كيف يمكنني خدمتك؟',
+      title: 'مساعد أكسيز', online: 'متصل', placeholder: 'اكتب رسالتك...', typeMsg: 'اكتب رسالتك', send: 'إرسال الرسالة',
+      close: 'إغلاق المحادثة', open: 'فتح المحادثة', dialog: 'محادثة مساعد أكسيز', typing: 'مساعد أكسيز يكتب الآن',
+      greeting: 'مرحبًا بك! أنا مساعد أكسيز، ويسعدني مساعدتك اليوم. كيف يمكنني خدمتك؟',
       chips: [
-        ['أدير عقارات', 'أدير عقارات وأريد معرفة المزيد عن نظام إدارة العقارات من Accez'],
-        ['لدي نشاط يقدم خدمات', 'لدي نشاط يقدم خدمات بالحجز وأريد معرفة كيف يعمل Accez لنشاطي'],
-        ['الأسعار والخطط', 'كم تبلغ تكلفة Accez؟'],
-        ['تحدث مع الفريق', 'أرغب في التحدث مع فريق Accez'],
+        ['أدير عقارات', 'أدير عقارات وأريد معرفة المزيد عن نظام إدارة العقارات من أكسيز'],
+        ['لدي نشاط يقدم خدمات', 'لدي نشاط يقدم خدمات بالحجز وأريد معرفة كيف يعمل أكسيز لنشاطي'],
+        ['الأسعار والخطط', 'كم تبلغ تكلفة أكسيز؟'],
+        ['تحدث مع الفريق', 'أرغب في التحدث مع فريق أكسيز'],
       ],
       talkTeam: 'تحدث مع الفريق', rate: 'ترسل الرسائل بسرعة كبيرة. انتظر لحظة ثم حاول مرة أخرى.',
       error: 'حدث خطأ من جهتنا. يُرجى المحاولة بعد قليل.', network: 'تعذّر الوصول إلى الخادم. يُرجى التحقق من اتصالك ثم المحاولة مرة أخرى.',
@@ -40,8 +40,8 @@
       roles: { property_manager: 'أدير عقارات (مدير عقارات، مالك مؤجّر، فندق)', property_owner: 'أملك عقارًا', service_provider: 'لدي نشاط يقدم خدمات بالحجز (صالون، حلاق، عيادة...)', resident_guest: 'مقيم أو ضيف', other: 'غير ذلك' },
       fieldNames: { firstName: 'الاسم الأول', lastName: 'اسم العائلة', email: 'البريد الإلكتروني', phone: 'رقم الجوال', role: 'الصفة', message: 'الرسالة' },
       retry: 'يُرجى الضغط على الزر مرة أخرى.', formFail: 'تعذّر إرسال بياناتك.', check: 'يُرجى مراجعة:', formRate: 'عدد الطلبات كبير. يُرجى المحاولة لاحقًا.', formConn: 'حدثت مشكلة في الاتصال. يُرجى المحاولة مرة أخرى.',
-      privacy: 'بإرسال بياناتك فإنك توافق على أن يتواصل معك فريق Accez بخصوص طلبك. تُحفظ رسائلك في هذه المحادثة لمساعدتنا في الرد عليك.',
-      thanks: (n) => `شكرًا ${n}. استلمنا بياناتك وسيتواصل معك فريق Accez.`,
+      privacy: 'بإرسال بياناتك فإنك توافق على أن يتواصل معك فريق أكسيز بخصوص طلبك. تُحفظ رسائلك في هذه المحادثة لمساعدتنا في الرد عليك.',
+      thanks: (n) => `شكرًا ${n}. استلمنا بياناتك وسيتواصل معك فريق أكسيز.`,
     },
   }
   const q = new URLSearchParams(location.search)
@@ -61,6 +61,9 @@
     closeBtn.setAttribute('aria-label', s.close)
     panel.setAttribute('aria-label', s.dialog)
     toggle.setAttribute('aria-label', open ? s.close : s.open)
+    // The welcome bubble and the starter buttons are interface text, so they follow the language. Real conversation stays as written.
+    if (greetEl) greetEl.innerHTML = format(s.greeting)
+    if (chips.children.length) showChips()
   }
 
   /* ---------- session ---------- */
@@ -80,7 +83,7 @@
     try { localStorage.setItem('accez_sid', sid) } catch (e) { /* ignore */ }
   }
 
-  let open = false, busy = false, started = false, audience = 'general'
+  let open = false, busy = false, started = false, audience = 'general', greetEl = null
 
   /* ---------- rendering ---------- */
   const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
@@ -138,7 +141,7 @@
     // The host page resizes the iframe from this message. It carries no data beyond the open state.
     parent.postMessage({ type: 'accez-assistant', isOpen: v }, '*')
     if (v) {
-      if (!started) { started = true; bot(t().greeting); showChips() }
+      if (!started) { started = true; greetEl = bot(t().greeting); showChips() }
       input.focus()
     }
   }

@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { config } from './config.js'
 import { addMessage, getHistory, getSessionAudience, touchSession, type MessageMeta, type StoredMessage } from './db.js'
 import { BudgetError, embed, GeminiError, generate, type Turn } from './gemini.js'
-import { bannedPhrase, internalLeak, leaksScaffolding, looksLikeCodeOrFile, redact, sanitizeUserText, stripRoleQuestion, takeNoAnswer, ungroundedNumbers } from './guard.js'
+import { arabicBrand, bannedPhrase, internalLeak, leaksScaffolding, looksLikeCodeOrFile, redact, sanitizeUserText, stripRoleQuestion, takeNoAnswer, ungroundedNumbers } from './guard.js'
 import { AUDIENCES, indexProblem, loadIndex, search, withGuardrails, type Audience, type Hit, type Index } from './knowledge.js'
 import * as P from './prompts.js'
 import type { Lang } from './prompts.js'
@@ -93,6 +93,7 @@ export async function chat(sessionId: string, message: string): Promise<ChatResu
     meta: MessageMeta = {},
   ): ChatResult => {
     const latencyMs = Date.now() - started
+    if (lang === 'ar') reply = arabicBrand(reply)
     const audit = { model: config.CHAT_MODEL, promptVersion: P.PROMPT_VERSION, kbHash: index?.kbHash, ...meta }
     addMessage(sessionId, 'assistant', reply, { audience, latencyMs, ...audit })
     console.log(JSON.stringify({ evt: 'chat', sid: sessionId.slice(0, 8), audience, ms: latencyMs, ...audit }))

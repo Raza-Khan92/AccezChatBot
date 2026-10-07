@@ -4,7 +4,7 @@ import type { Audience } from './knowledge.js'
 export type Lang = 'en' | 'ar'
 
 /** Recorded with every answer. Change it whenever a prompt or a fixed reply changes. */
-export const PROMPT_VERSION = '2026-10-06.2'
+export const PROMPT_VERSION = '2026-10-07.1'
 
 /** Fixed replies the server sends without asking the model. Arabic follows the wording of the Accez website. */
 export const TEXT: Record<Lang, { greeting: string; busy: string; unsure: string; handoff: string; abuse: string; problem: string; internal: string; content: string }> = {
@@ -19,14 +19,14 @@ export const TEXT: Record<Lang, { greeting: string; busy: string; unsure: string
     content: "I'm not able to open links, read files, or review code or pasted documents. I'm happy to help with questions about Accez.",
   },
   ar: {
-    greeting: 'مرحبًا بك! أنا مساعد Accez، ويسعدني مساعدتك اليوم. كيف يمكنني خدمتك؟',
-    busy: 'أواجه صعوبة في الرد الآن. إذا تركت بياناتك فسيتواصل معك فريق Accez.',
-    unsure: 'ليست لدي إجابة موثوقة عن هذا السؤال، ولا أريد التخمين. يستطيع فريق Accez الإجابة بدقة إذا شاركتنا بياناتك.',
-    handoff: 'يسعدني ربطك بفريق Accez. شاركنا بعض بياناتك أدناه وسيتواصل معك أحد أعضاء الفريق.',
-    abuse: 'لا أستطيع المساعدة في ذلك. أنا هنا للإجابة عن أسئلتك حول Accez.',
-    problem: 'نأسف لأنك تواجه هذه المشكلة. لا أستطيع الاطلاع على الحسابات أو معرفة ما يحدث خلف الكواليس، وأسرع طريقة لحلها هي إرسال التفاصيل إلى فريق Accez: ما الذي كنت تفعله وما الذي ظهر لك. يمكن للعملاء الحاليين استخدام صفحة الدعم https://www.accez.cloud/support، أو يمكنني تمرير بياناتك إلى الفريق من هنا.',
-    internal: 'هذا أمر لا أستطيع مشاركته أو التعليق عليه. يسعدني مساعدتك في أسئلة المزايا والخطط وكيفية البدء مع Accez.',
-    content: 'لا أستطيع فتح الروابط أو قراءة الملفات أو مراجعة الأكواد أو المستندات الملصقة. يسعدني مساعدتك في أسئلتك حول Accez.',
+    greeting: 'مرحبًا بك! أنا مساعد أكسيز، ويسعدني مساعدتك اليوم. كيف يمكنني خدمتك؟',
+    busy: 'أواجه صعوبة في الرد الآن. إذا تركت بياناتك فسيتواصل معك فريق أكسيز.',
+    unsure: 'ليست لدي إجابة موثوقة عن هذا السؤال، ولا أريد التخمين. يستطيع فريق أكسيز الإجابة بدقة إذا شاركتنا بياناتك.',
+    handoff: 'يسعدني ربطك بفريق أكسيز. شاركنا بعض بياناتك أدناه وسيتواصل معك أحد أعضاء الفريق.',
+    abuse: 'لا أستطيع المساعدة في ذلك. أنا هنا للإجابة عن أسئلتك حول أكسيز.',
+    problem: 'نأسف لأنك تواجه هذه المشكلة. لا أستطيع الاطلاع على الحسابات أو معرفة ما يحدث خلف الكواليس، وأسرع طريقة لحلها هي إرسال التفاصيل إلى فريق أكسيز: ما الذي كنت تفعله وما الذي ظهر لك. يمكن للعملاء الحاليين استخدام صفحة الدعم https://www.accez.cloud/support، أو يمكنني تمرير بياناتك إلى الفريق من هنا.',
+    internal: 'هذا أمر لا أستطيع مشاركته أو التعليق عليه. يسعدني مساعدتك في أسئلة المزايا والخطط وكيفية البدء مع أكسيز.',
+    content: 'لا أستطيع فتح الروابط أو قراءة الملفات أو مراجعة الأكواد أو المستندات الملصقة. يسعدني مساعدتك في أسئلتك حول أكسيز.',
   },
 }
 
@@ -97,7 +97,7 @@ const ARABIC_RULES = `
 
 ARABIC REPLIES
 - Write clear, warm Modern Standard Arabic that sounds natural to a Saudi reader: not stiff, no slang, even if the person used a dialect.
-- Keep "Accez" in Latin letters, keep the plan names Starter and Growth in Latin letters, use Western digits (0-9) and the % sign, and keep URLs and email addresses unchanged.
+- Write the brand name in Arabic script as أكسيز, never "Accez" in Latin letters (keep domain names such as accez.cloud and email addresses unchanged). Keep the plan names Starter and Growth in Latin letters, use Western digits (0-9) and the % sign, and keep URLs and email addresses unchanged.
 - Use these terms exactly as the Accez website does: ${ARABIC_GLOSSARY}.`
 
 export const answerSystem = (lang: Lang): string => (lang === 'ar' ? ANSWER_SYSTEM + ARABIC_RULES : ANSWER_SYSTEM)
