@@ -162,6 +162,12 @@ Accez publishes its Refund Policy on the Accez website. The Refund page has two 
 You can ask for a demo or a sales conversation through the contact form on the Accez website. The Book a demo buttons on the site lead to that form, and the website describes the demo as a walkthrough with the Accez team in Riyadh. The form asks for your name, email, company, mobile, city and comments. Enterprise customers use the Contact Sales option, which goes to the same contact section.
 <!-- src: WEB-110, WEB-112, WEB-092 -->
 
+## Who do I contact when something breaks or I need help?
+
+It depends on who you are, so if the visitor has not said, ask which describes them best: a property manager or a service provider. Property managers and service providers, and anyone with an account question, can use the support form on the Accez website, and the team in Riyadh replies within 24 hours. For a problem with a specific booking or service, the person can also contact the business that provides it.
+<!-- src: WEB-106 -->
+<!-- ask-side -->
+
 ## Contacting support
 
 Customers can contact Accez support through the support form on the Accez website. You give your name, email, company, a subject and a description, and the team in Riyadh replies within 24 hours. Accez does not state support hours here, and does not give a phone number here. For sales or demo questions use the contact form on the website instead.
@@ -209,7 +215,7 @@ Accez brings two things together on one platform. For property managers and owne
 
 ## What happens in a demo? How long is it?
 
-A demo is tailored to you. The Accez team shows you how Accez can make your work easier, based on what you want to see and your requirements, so it depends on what you would like to cover. You can ask for a demo through the contact form on the Accez website.
+A demo is tailored to you. The Accez team shows you how Accez can make your work easier, based on what you want to see and your requirements, so it depends on what you would like to cover. To arrange one, share your details and the team will get in touch. You can ask for a demo through the contact form on the Accez website.
 <!-- src: decisions D-27 -->
 
 ## Which companies use Accez? Can I see references or customers?

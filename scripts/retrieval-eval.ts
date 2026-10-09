@@ -12,7 +12,7 @@ if (!idx) { console.error('No index: run npm run ingest'); process.exit(1) }
 const problem = indexProblem(idx)
 if (problem) { console.error(`Stale index: ${problem}. Run npm run ingest`); process.exit(1) }
 
-const cases = JSON.parse(readFileSync('evals/retrieval.json', 'utf8')) as Case[]
+const cases = JSON.parse(readFileSync(process.argv[2] ?? 'evals/retrieval.json', 'utf8')) as Case[]
 const threshold = Number(process.env.RECALL_THRESHOLD ?? 0.85)
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 let hits = 0

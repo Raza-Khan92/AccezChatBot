@@ -16,10 +16,7 @@
     "chats": "tsx scripts/chats.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "dev:test": "DATA_DIR=data-test INDEX_PATH=data-test/index.json EMBED_MODEL=gemini-embedding-001 CHAT_MODEL=gemini-3.1-flash-lite tsx watch --env-file=.env.local src/server.ts",
-    "ingest:test": "DATA_DIR=data-test INDEX_PATH=data-test/index.json EMBED_MODEL=gemini-embedding-001 tsx --env-file=.env.local scripts/ingest.ts",
     "retrieval-eval": "tsx --env-file=.env.local scripts/retrieval-eval.ts",
-    "retrieval-eval:test": "DATA_DIR=data-test INDEX_PATH=data-test/index.json EMBED_MODEL=gemini-embedding-001 tsx --env-file=.env.local scripts/retrieval-eval.ts",
     "forget": "tsx scripts/forget.ts",
     "start:prod": "node --import tsx src/server.ts"
   },

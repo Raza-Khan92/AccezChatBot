@@ -183,6 +183,7 @@
         if ((data.lang === 'ar' || data.lang === 'en') && data.lang !== lang) applyLang(data.lang)
         bot(data.reply)
         if (data.actions?.leadForm) showLeadForm()
+        else if (data.actions?.askSide) showSideChoices()
         else if (data.actions?.offerTeam) offerTeam()
       }
     } catch (e) {
@@ -193,6 +194,18 @@
       composer.querySelector('.send').disabled = false
       input.focus()
     }
+  }
+
+  // Under a "which best describes you" question: the two sides as buttons (the first two starter buttons), shorter wording for the reply.
+  function showSideChoices() {
+    chips.replaceChildren(...t().chips.slice(0, 2).map(([label]) => {
+      const b = document.createElement('button')
+      b.type = 'button'
+      b.className = 'chip'
+      b.textContent = label
+      b.addEventListener('click', () => send(label))
+      return b
+    }))
   }
 
   function offerTeam() {

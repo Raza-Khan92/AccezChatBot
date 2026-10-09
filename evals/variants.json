@@ -1,0 +1,809 @@
+[
+ {
+  "id": "v1",
+  "q": "can i apple pay??",
+  "audience": "general",
+  "expect": [
+   "Can I pay with Apple Pay or Google Pay?"
+  ]
+ },
+ {
+  "id": "v2",
+  "q": "do u take apple pay",
+  "audience": "general",
+  "expect": [
+   "Can I pay with Apple Pay or Google Pay?"
+  ]
+ },
+ {
+  "id": "v3",
+  "q": "is google pay supported when paying",
+  "audience": "general",
+  "expect": [
+   "Can I pay with Apple Pay or Google Pay?"
+  ]
+ },
+ {
+  "id": "v4",
+  "q": "هل يمكن الدفع بابل باي",
+  "audience": "general",
+  "expect": [
+   "Can I pay with Apple Pay or Google Pay?"
+  ]
+ },
+ {
+  "id": "v5",
+  "q": "ابي ادفع بابل باي ينفع؟",
+  "audience": "general",
+  "expect": [
+   "Can I pay with Apple Pay or Google Pay?"
+  ]
+ },
+ {
+  "id": "v6",
+  "q": "how do i get my money out",
+  "audience": "provider",
+  "expect": [
+   "How do I request a payout?",
+   "How do I request a payout from my balance?"
+  ]
+ },
+ {
+  "id": "v7",
+  "q": "where do i withdraw my earnings",
+  "audience": "provider",
+  "expect": [
+   "How do I request a payout?",
+   "How do I request a payout from my balance?"
+  ]
+ },
+ {
+  "id": "v8",
+  "q": "cash out my balance pls",
+  "audience": "provider",
+  "expect": [
+   "How do I request a payout?",
+   "How do I request a payout from my balance?"
+  ]
+ },
+ {
+  "id": "v9",
+  "q": "كيف اسحب ارباحي",
+  "audience": "provider",
+  "expect": [
+   "How do I request a payout?",
+   "How do I request a payout from my balance?"
+  ]
+ },
+ {
+  "id": "v10",
+  "q": "وين اطلب تحويل فلوسي للبنك",
+  "audience": "provider",
+  "expect": [
+   "How do I request a payout?",
+   "How do I request a payout from my balance?"
+  ]
+ },
+ {
+  "id": "v11",
+  "q": "forgot my pass",
+  "audience": "general",
+  "expect": [
+   "How do I reset or change my password?"
+  ]
+ },
+ {
+  "id": "v12",
+  "q": "i cant login need new password",
+  "audience": "general",
+  "expect": [
+   "How do I reset or change my password?"
+  ]
+ },
+ {
+  "id": "v13",
+  "q": "how to change pw",
+  "audience": "general",
+  "expect": [
+   "How do I reset or change my password?"
+  ]
+ },
+ {
+  "id": "v14",
+  "q": "نسيت كلمة المرور",
+  "audience": "general",
+  "expect": [
+   "How do I reset or change my password?"
+  ]
+ },
+ {
+  "id": "v15",
+  "q": "كيف اغير الباسورد",
+  "audience": "general",
+  "expect": [
+   "How do I reset or change my password?"
+  ]
+ },
+ {
+  "id": "v16",
+  "q": "how do i reach you guys",
+  "audience": "general",
+  "expect": [
+   "Contacting support",
+   "What are your support hours, response time and phone number?"
+  ]
+ },
+ {
+  "id": "v17",
+  "q": "is there a number i can call",
+  "audience": "general",
+  "expect": [
+   "Contacting support",
+   "What are your support hours, response time and phone number?"
+  ]
+ },
+ {
+  "id": "v18",
+  "q": "who do i talk to when something breaks",
+  "audience": "general",
+  "expect": [
+   "Contacting support",
+   "What are your support hours, response time and phone number?"
+  ]
+ },
+ {
+  "id": "v19",
+  "q": "how long till you reply to a ticket",
+  "audience": "general",
+  "expect": [
+   "Contacting support",
+   "What are your support hours, response time and phone number?"
+  ]
+ },
+ {
+  "id": "v20",
+  "q": "كيف اتواصل مع الدعم",
+  "audience": "general",
+  "expect": [
+   "Contacting support",
+   "What are your support hours, response time and phone number?"
+  ]
+ },
+ {
+  "id": "v21",
+  "q": "عندكم رقم جوال للدعم؟",
+  "audience": "general",
+  "expect": [
+   "Contacting support",
+   "What are your support hours, response time and phone number?"
+  ]
+ },
+ {
+  "id": "v22",
+  "q": "whats the monthly price for providers",
+  "audience": "general",
+  "expect": [
+   "How much do the Starter and Growth plans cost per month?",
+   "Service provider plans and prices"
+  ]
+ },
+ {
+  "id": "v23",
+  "q": "how much per month if im a salon",
+  "audience": "general",
+  "expect": [
+   "How much do the Starter and Growth plans cost per month?",
+   "Service provider plans and prices"
+  ]
+ },
+ {
+  "id": "v24",
+  "q": "starter vs growth cost",
+  "audience": "general",
+  "expect": [
+   "How much do the Starter and Growth plans cost per month?",
+   "Service provider plans and prices"
+  ]
+ },
+ {
+  "id": "v25",
+  "q": "كم سعر الباقة الشهرية لمقدم الخدمة",
+  "audience": "general",
+  "expect": [
+   "How much do the Starter and Growth plans cost per month?",
+   "Service provider plans and prices"
+  ]
+ },
+ {
+  "id": "v26",
+  "q": "بكم الاشتراك الشهري",
+  "audience": "general",
+  "expect": [
+   "How much do the Starter and Growth plans cost per month?",
+   "Service provider plans and prices"
+  ]
+ },
+ {
+  "id": "v27",
+  "q": "is there a free version",
+  "audience": "general",
+  "expect": [
+   "Plans overview",
+   "Property management Free plan"
+  ]
+ },
+ {
+  "id": "v28",
+  "q": "can i try without paying anything",
+  "audience": "general",
+  "expect": [
+   "Plans overview",
+   "Property management Free plan"
+  ]
+ },
+ {
+  "id": "v29",
+  "q": "what packages do you have",
+  "audience": "general",
+  "expect": [
+   "Plans overview",
+   "Property management Free plan"
+  ]
+ },
+ {
+  "id": "v30",
+  "q": "do i need a credit card to start",
+  "audience": "general",
+  "expect": [
+   "Plans overview",
+   "Property management Free plan"
+  ]
+ },
+ {
+  "id": "v31",
+  "q": "فيه نسخة مجانية؟",
+  "audience": "general",
+  "expect": [
+   "Plans overview",
+   "Property management Free plan"
+  ]
+ },
+ {
+  "id": "v32",
+  "q": "ايش الباقات الموجودة",
+  "audience": "general",
+  "expect": [
+   "Plans overview",
+   "Property management Free plan"
+  ]
+ },
+ {
+  "id": "v33",
+  "q": "can someone show me the system",
+  "audience": "general",
+  "expect": [
+   "Request a demo or talk to sales"
+  ]
+ },
+ {
+  "id": "v34",
+  "q": "i want to see it in action",
+  "audience": "general",
+  "expect": [
+   "Request a demo or talk to sales"
+  ]
+ },
+ {
+  "id": "v35",
+  "q": "book a call with sales",
+  "audience": "general",
+  "expect": [
+   "Request a demo or talk to sales"
+  ]
+ },
+ {
+  "id": "v36",
+  "q": "ابي عرض توضيحي",
+  "audience": "general",
+  "expect": [
+   "Request a demo or talk to sales"
+  ]
+ },
+ {
+  "id": "v37",
+  "q": "ممكن احد يكلمني ويشرح لي النظام",
+  "audience": "general",
+  "expect": [
+   "Request a demo or talk to sales"
+  ]
+ },
+ {
+  "id": "v38",
+  "q": "link my airbnb listing",
+  "audience": "pms",
+  "expect": [
+   "How do I connect a booking channel?",
+   "Reservations and channel connections"
+  ]
+ },
+ {
+  "id": "v39",
+  "q": "how to sync booking.com with accez",
+  "audience": "pms",
+  "expect": [
+   "How do I connect a booking channel?",
+   "Reservations and channel connections"
+  ]
+ },
+ {
+  "id": "v40",
+  "q": "connecting expedia",
+  "audience": "pms",
+  "expect": [
+   "How do I connect a booking channel?",
+   "Reservations and channel connections"
+  ]
+ },
+ {
+  "id": "v41",
+  "q": "can my airbnb bookings come in automatically",
+  "audience": "pms",
+  "expect": [
+   "How do I connect a booking channel?",
+   "Reservations and channel connections"
+  ]
+ },
+ {
+  "id": "v42",
+  "q": "كيف اربط حسابي في ايربنب",
+  "audience": "pms",
+  "expect": [
+   "How do I connect a booking channel?",
+   "Reservations and channel connections"
+  ]
+ },
+ {
+  "id": "v43",
+  "q": "ازاي اوصل بوكينج",
+  "audience": "pms",
+  "expect": [
+   "How do I connect a booking channel?",
+   "Reservations and channel connections"
+  ]
+ },
+ {
+  "id": "v44",
+  "q": "i run a small hotel will it work",
+  "audience": "pms",
+  "expect": [
+   "Hotels and serviced apartments",
+   "Is Accez for hotels and serviced apartments",
+   "Does the Accez property management system support hotels and serviced apartments?"
+  ]
+ },
+ {
+  "id": "v45",
+  "q": "serviced apts ok?",
+  "audience": "pms",
+  "expect": [
+   "Hotels and serviced apartments",
+   "Is Accez for hotels and serviced apartments",
+   "Does the Accez property management system support hotels and serviced apartments?"
+  ]
+ },
+ {
+  "id": "v46",
+  "q": "do you handle short term rentals like airbnb hosts",
+  "audience": "pms",
+  "expect": [
+   "Hotels and serviced apartments",
+   "Is Accez for hotels and serviced apartments",
+   "Does the Accez property management system support hotels and serviced apartments?"
+  ]
+ },
+ {
+  "id": "v47",
+  "q": "عندي شقق مفروشة تناسبني",
+  "audience": "pms",
+  "expect": [
+   "Hotels and serviced apartments",
+   "Is Accez for hotels and serviced apartments",
+   "Does the Accez property management system support hotels and serviced apartments?"
+  ]
+ },
+ {
+  "id": "v48",
+  "q": "هل النظام مناسب للفنادق",
+  "audience": "pms",
+  "expect": [
+   "Hotels and serviced apartments",
+   "Is Accez for hotels and serviced apartments",
+   "Does the Accez property management system support hotels and serviced apartments?"
+  ]
+ },
+ {
+  "id": "v49",
+  "q": "i have 80 units in excel can i upload them",
+  "audience": "pms",
+  "expect": [
+   "Can I import units from a spreadsheet?"
+  ]
+ },
+ {
+  "id": "v50",
+  "q": "bulk upload properties",
+  "audience": "pms",
+  "expect": [
+   "Can I import units from a spreadsheet?"
+  ]
+ },
+ {
+  "id": "v51",
+  "q": "add many units at once",
+  "audience": "pms",
+  "expect": [
+   "Can I import units from a spreadsheet?"
+  ]
+ },
+ {
+  "id": "v52",
+  "q": "ابي ارفع الوحدات من ملف اكسل",
+  "audience": "pms",
+  "expect": [
+   "Can I import units from a spreadsheet?"
+  ]
+ },
+ {
+  "id": "v53",
+  "q": "can my client move their appointment",
+  "audience": "general",
+  "expect": [
+   "Can customers reschedule a booking?"
+  ]
+ },
+ {
+  "id": "v54",
+  "q": "customer wants to change the time",
+  "audience": "general",
+  "expect": [
+   "Can customers reschedule a booking?"
+  ]
+ },
+ {
+  "id": "v55",
+  "q": "rebooking an appointment",
+  "audience": "general",
+  "expect": [
+   "Can customers reschedule a booking?"
+  ]
+ },
+ {
+  "id": "v56",
+  "q": "العميل يبي يغير موعده ينفع",
+  "audience": "general",
+  "expect": [
+   "Can customers reschedule a booking?"
+  ]
+ },
+ {
+  "id": "v57",
+  "q": "take a down payment before the appointment",
+  "audience": "general",
+  "expect": [
+   "Can I ask customers to pay a deposit?"
+  ]
+ },
+ {
+  "id": "v58",
+  "q": "can i charge in advance",
+  "audience": "general",
+  "expect": [
+   "Can I ask customers to pay a deposit?"
+  ]
+ },
+ {
+  "id": "v59",
+  "q": "require prepayment",
+  "audience": "general",
+  "expect": [
+   "Can I ask customers to pay a deposit?"
+  ]
+ },
+ {
+  "id": "v60",
+  "q": "ابي اخذ عربون من العملاء",
+  "audience": "general",
+  "expect": [
+   "Can I ask customers to pay a deposit?"
+  ]
+ },
+ {
+  "id": "v61",
+  "q": "does it have arabic",
+  "audience": "general",
+  "expect": [
+   "Languages",
+   "Can I use the Accez property management system in Arabic?"
+  ]
+ },
+ {
+  "id": "v62",
+  "q": "is the platform available in english and arabic",
+  "audience": "general",
+  "expect": [
+   "Languages",
+   "Can I use the Accez property management system in Arabic?"
+  ]
+ },
+ {
+  "id": "v63",
+  "q": "النظام يدعم العربي؟",
+  "audience": "general",
+  "expect": [
+   "Languages",
+   "Can I use the Accez property management system in Arabic?"
+  ]
+ },
+ {
+  "id": "v64",
+  "q": "فيه واجهة عربية",
+  "audience": "general",
+  "expect": [
+   "Languages",
+   "Can I use the Accez property management system in Arabic?"
+  ]
+ },
+ {
+  "id": "v65",
+  "q": "is this company real",
+  "audience": "general",
+  "expect": [
+   "Is Accez legitimate? Is it a scam? Is it reliable? I heard bad things about it."
+  ]
+ },
+ {
+  "id": "v66",
+  "q": "can i trust accez",
+  "audience": "general",
+  "expect": [
+   "Is Accez legitimate? Is it a scam? Is it reliable? I heard bad things about it."
+  ]
+ },
+ {
+  "id": "v67",
+  "q": "someone told me its a scam is it",
+  "audience": "general",
+  "expect": [
+   "Is Accez legitimate? Is it a scam? Is it reliable? I heard bad things about it."
+  ]
+ },
+ {
+  "id": "v68",
+  "q": "هل أكسيز موثوقة",
+  "audience": "general",
+  "expect": [
+   "Is Accez legitimate? Is it a scam? Is it reliable? I heard bad things about it."
+  ]
+ },
+ {
+  "id": "v69",
+  "q": "ما هي سمعة الشركة",
+  "audience": "general",
+  "expect": [
+   "Is Accez legitimate? Is it a scam? Is it reliable? I heard bad things about it."
+  ]
+ },
+ {
+  "id": "v70",
+  "q": "i own a barbershop how do i join",
+  "audience": "provider",
+  "expect": [
+   "How do I sign up as a service provider on Accez?",
+   "The service provider side"
+  ]
+ },
+ {
+  "id": "v71",
+  "q": "how to register my clinic",
+  "audience": "provider",
+  "expect": [
+   "How do I sign up as a service provider on Accez?",
+   "The service provider side"
+  ]
+ },
+ {
+  "id": "v72",
+  "q": "start selling my services here",
+  "audience": "provider",
+  "expect": [
+   "How do I sign up as a service provider on Accez?",
+   "The service provider side"
+  ]
+ },
+ {
+  "id": "v73",
+  "q": "كيف اسجل صالوني عندكم",
+  "audience": "provider",
+  "expect": [
+   "How do I sign up as a service provider on Accez?",
+   "The service provider side"
+  ]
+ },
+ {
+  "id": "v74",
+  "q": "ابي انضم كمقدم خدمة",
+  "audience": "provider",
+  "expect": [
+   "How do I sign up as a service provider on Accez?",
+   "The service provider side"
+  ]
+ },
+ {
+  "id": "v75",
+  "q": "add my employees",
+  "audience": "provider",
+  "expect": [
+   "How do I add a staff member?",
+   "Can I add staff members to my provider account?"
+  ]
+ },
+ {
+  "id": "v76",
+  "q": "can my barbers have their own logins",
+  "audience": "provider",
+  "expect": [
+   "How do I add a staff member?",
+   "Can I add staff members to my provider account?"
+  ]
+ },
+ {
+  "id": "v77",
+  "q": "invite team members",
+  "audience": "provider",
+  "expect": [
+   "How do I add a staff member?",
+   "Can I add staff members to my provider account?"
+  ]
+ },
+ {
+  "id": "v78",
+  "q": "كيف اضيف موظفين",
+  "audience": "provider",
+  "expect": [
+   "How do I add a staff member?",
+   "Can I add staff members to my provider account?"
+  ]
+ },
+ {
+  "id": "v79",
+  "q": "can the landlord see how much he earned",
+  "audience": "pms",
+  "expect": [
+   "Can owners get statements?",
+   "Owners, statements and payouts"
+  ]
+ },
+ {
+  "id": "v80",
+  "q": "send monthly report to property owner",
+  "audience": "pms",
+  "expect": [
+   "Can owners get statements?",
+   "Owners, statements and payouts"
+  ]
+ },
+ {
+  "id": "v81",
+  "q": "owner payout reports",
+  "audience": "pms",
+  "expect": [
+   "Can owners get statements?",
+   "Owners, statements and payouts"
+  ]
+ },
+ {
+  "id": "v82",
+  "q": "هل يقدر المالك يشوف كشف حساب",
+  "audience": "pms",
+  "expect": [
+   "Can owners get statements?",
+   "Owners, statements and payouts"
+  ]
+ },
+ {
+  "id": "v83",
+  "q": "can i check in before arriving",
+  "audience": "resident",
+  "expect": [
+   "How do I check in online?"
+  ]
+ },
+ {
+  "id": "v84",
+  "q": "online check in steps",
+  "audience": "resident",
+  "expect": [
+   "How do I check in online?"
+  ]
+ },
+ {
+  "id": "v85",
+  "q": "how do i do the check-in form",
+  "audience": "resident",
+  "expect": [
+   "How do I check in online?"
+  ]
+ },
+ {
+  "id": "v86",
+  "q": "كيف اسجل دخول قبل الوصول",
+  "audience": "resident",
+  "expect": [
+   "How do I check in online?"
+  ]
+ },
+ {
+  "id": "v87",
+  "q": "do you only do salons",
+  "audience": "general",
+  "expect": [
+   "Is a service provider only a salon or barber"
+  ]
+ },
+ {
+  "id": "v88",
+  "q": "can a plumber use accez",
+  "audience": "general",
+  "expect": [
+   "Is a service provider only a salon or barber"
+  ]
+ },
+ {
+  "id": "v89",
+  "q": "is it only for beauty businesses",
+  "audience": "general",
+  "expect": [
+   "Is a service provider only a salon or barber"
+  ]
+ },
+ {
+  "id": "v90",
+  "q": "هل تناسب الصيانة والتنظيف",
+  "audience": "general",
+  "expect": [
+   "Is a service provider only a salon or barber"
+  ]
+ },
+ {
+  "id": "v91",
+  "q": "my ac is broken what do i do",
+  "audience": "resident",
+  "expect": [
+   "How do I report a maintenance problem?"
+  ]
+ },
+ {
+  "id": "v92",
+  "q": "how to tell management something is leaking",
+  "audience": "resident",
+  "expect": [
+   "How do I report a maintenance problem?"
+  ]
+ },
+ {
+  "id": "v93",
+  "q": "submit a repair request",
+  "audience": "resident",
+  "expect": [
+   "How do I report a maintenance problem?"
+  ]
+ },
+ {
+  "id": "v94",
+  "q": "المكيف خربان كيف ابلغ",
+  "audience": "resident",
+  "expect": [
+   "How do I report a maintenance problem?"
+  ]
+ }
+]

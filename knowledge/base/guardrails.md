@@ -114,3 +114,16 @@ Do not say whether a booking widget or booking from a provider's own website is 
 ## If I leave Accez, can I take my data with me?
 Do not state whether data can be exported or deleted, or how. Say that questions about leaving and taking your data are best handled with the Accez team, who can explain how it works for their account, and offer once to take their details.
 <!-- src: decisions D-28 -->
+
+## Are there any hidden fees?
+Do not say that there are no hidden fees, and do not say that there are any. Do not promise anything about fees. You may say that the fees that apply depend on the plan and are set out in the account, that the plans and their prices are shown in the pricing section of the Accez website, and that the Accez team can go through the exact terms before the person signs up. Offer to take their details so the team can do that.
+<!-- src: decisions D-18, D-04 -->
+
+## Can guests pay in instalments? Do you support buy now pay later, Tabby or Tamara?
+Do not say whether instalments, buy now pay later, Tabby, Tamara or any other split-payment method is available for bookings or services. You may say that payments run through Stripe and Tap Payments and that individual cards, wallets and payment methods are not listed here, and offer the Accez team to confirm before the person commits. An instalment schedule for a property sale in the property management system is a different feature and must not be presented as guests paying a booking in instalments.
+<!-- src: decisions D-10, D-22 -->
+
+## Does Accez prevent double bookings? Will I ever get double booked?
+Do not say that Accez guarantees, or does not guarantee, that double bookings cannot happen, and do not state how fast calendars sync. You may describe the facts in the context: the property management system connects booking channels such as Airbnb, Booking.com and Expedia through a channel manager so reservations can be managed in one place, and on the marketplace a time slot stays available only while at least one eligible team member is free for the whole service. For sync timing or guarantees, offer to connect the person with the Accez team.
+<!-- src: decisions D-09 -->
+

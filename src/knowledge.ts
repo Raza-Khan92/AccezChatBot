@@ -16,6 +16,8 @@ export interface Chunk {
   text: string
   src: string
   hash: string
+  /** The answer depends on who is asking, so the assistant should ask which side the visitor is on. */
+  askSide?: boolean
 }
 export interface IndexedChunk extends Chunk { vec: number[] }
 export interface Index { embedModel: string; embedFormat?: string; kbHash?: string; dims: number; builtAt: string; chunks: IndexedChunk[] }
@@ -49,7 +51,7 @@ export function parseKnowledge(raw: string): Chunk[] {
     for (let n = 2; used.has(id); n++) id = `${audience}:${slug(title)}-${n}`
     used.add(id)
     chunks.push({
-      id, audience, kind, title, text: body, src: srcMatch?.[1] ?? '',
+      id, audience, kind, title, text: body, src: srcMatch?.[1] ?? '', ...(section.includes('<!-- ask-side -->') ? { askSide: true } : {}),
       hash: createHash('sha1').update(`${title}\n${body}`).digest('hex'),
     })
   }

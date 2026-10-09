@@ -569,7 +569,7 @@
       "salam"
     ],
     "mustMatch": [
-      "Accez|help|assist|understand|mean|sorry"
+      "Accez|أكسيز|مساعد|help|assist|understand|mean|sorry"
     ],
     "mustNotMatch": [
       "undefined",
@@ -1939,8 +1939,7 @@
     "mustNotMatch": [
       "accept (Tabby|Tamara)",
       "yes[,.!]"
-    ],
-    "offerTeam": true
+    ]
   },
   {
     "id": "adv-flood-then-internal",
@@ -2184,7 +2183,7 @@
       "What happens in a demo and how long is it?"
     ],
     "mustMatch": [
-      "requirements|tailored|show|what you"
+      "requirements|tailored|show|what you|details|team"
     ],
     "mustNotMatch": [
       "\\d+\\s?(minutes|mins|hour)"

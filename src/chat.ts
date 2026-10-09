@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { config } from './config.js'
 import { addMessage, getHistory, getSessionAudience, touchSession, type MessageMeta, type StoredMessage } from './db.js'
 import { BudgetError, embed, GeminiError, generate, type Turn } from './gemini.js'
-import { arabicBrand, bannedPhrase, internalLeak, leaksScaffolding, looksLikeCodeOrFile, redact, sanitizeUserText, stripRoleQuestion, takeNoAnswer, ungroundedNumbers } from './guard.js'
+import { arabicBrand, bannedPhrase, endsWithRoleQuestion, internalLeak, leaksScaffolding, looksLikeCodeOrFile, redact, sanitizeUserText, stripRoleQuestion, takeNoAnswer, ungroundedNumbers } from './guard.js'
 import { AUDIENCES, indexProblem, loadIndex, search, withGuardrails, type Audience, type Hit, type Index } from './knowledge.js'
 import * as P from './prompts.js'
 import type { Lang } from './prompts.js'
@@ -20,7 +20,7 @@ export interface ChatResult {
   reply: string
   audience: Audience
   lang: Lang
-  actions: { leadForm: boolean; offerTeam: boolean }
+  actions: { leadForm: boolean; offerTeam: boolean; askSide?: boolean }
 }
 
 let index: Index | null = null
@@ -132,7 +132,7 @@ export async function chat(sessionId: string, message: string): Promise<ChatResu
     // A side-neutral (general) chunk at the top means one answer fits everyone. Otherwise the best three facts must span both sides.
     const facts = context.filter((c) => c.kind === 'fact').slice(0, 3)
     const sides = new Set(facts.filter((c) => c.audience !== 'general').map((c) => c.audience))
-    const askWhichSide = audience === 'general' && facts[0]?.audience !== 'general' && sides.size >= 2
+    const askWhichSide = audience === 'general' && (facts.some((c) => c.askSide) || (facts[0]?.audience !== 'general' && sides.size >= 2))
     const turns = alternate([
       ...history.slice(-6).map((m): Turn => ({ role: m.role === 'user' ? 'user' : 'model', text: m.content })),
       { role: 'user', text: P.buildUserTurn({ boundary, audience, intent: cls.intent, lang, askWhichSide, context, message: clean }) },
@@ -168,8 +168,10 @@ export async function chat(sessionId: string, message: string): Promise<ChatResu
     const unanswered = cls.intent === 'question' && sawNoAnswer
     // A guardrail among the best matches means the topic is one the team must answer, so always offer the hand-off.
     const guardrailTopic = cls.intent === 'question' && used.slice(0, 3).some((h) => h.chunk.kind === 'guardrail')
-    if (cls.intent === 'question' && !askWhichSide) reply = stripRoleQuestion(reply)
-    return done(reply, audience, { leadForm: false, offerTeam: unanswered || guardrailTopic }, { intent: cls.intent, topScore, unanswered, tokensIn, tokensOut, chunkIds })
+    const mayAskSide = askWhichSide && !guardrailTopic
+    if (cls.intent === 'question' && !mayAskSide) reply = stripRoleQuestion(reply)
+    const askSide = cls.intent === 'question' && mayAskSide && endsWithRoleQuestion(reply)
+    return done(reply, audience, { leadForm: false, offerTeam: !askSide && (unanswered || guardrailTopic), askSide }, { intent: cls.intent, topScore, unanswered, tokensIn, tokensOut, chunkIds })
   } catch (err) {
     if (err instanceof BudgetError || err instanceof GeminiError) {
       console.error(JSON.stringify({ evt: 'chat_error', sid: sessionId.slice(0, 8), error: err instanceof GeminiError ? err.summary : err.message.slice(0, 160) }))

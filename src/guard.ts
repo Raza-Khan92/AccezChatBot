@@ -142,8 +142,16 @@ export function looksLikeCodeOrFile(msg: string): boolean {
  * is just friction. Works on a final paragraph or a final sentence, in English and Arabic.
  */
 const ROLE_QUESTION = /(manage propert|run a (service )?business|property manager|service provider|salon|barber|clinic|rentals? or hotels?|تدير عقارات|مدير عقارات|مقدم خدمة|يقدم خدمات|صالون|عيادة)/i
+const isRoleQuestion = (t: string) => /[?؟]\s*$/.test(t) && ROLE_QUESTION.test(t)
+
+/** True when the reply ends by asking which side the visitor is on, so the widget can show the choices as buttons. */
+export function endsWithRoleQuestion(reply: string): boolean {
+  const paragraphs = reply.trim().split(/\n{2,}/)
+  const sentences = reply.trim().split(/(?<=[.!?؟])\s+/)
+  return isRoleQuestion(paragraphs[paragraphs.length - 1]!) || isRoleQuestion(sentences[sentences.length - 1]!)
+}
+
 export function stripRoleQuestion(reply: string): string {
-  const isRoleQuestion = (t: string) => /[?؟]\s*$/.test(t) && ROLE_QUESTION.test(t)
   const paragraphs = reply.trim().split(/\n{2,}/)
   if (paragraphs.length > 1 && isRoleQuestion(paragraphs[paragraphs.length - 1]!)) return paragraphs.slice(0, -1).join('\n\n').trim()
   const sentences = reply.trim().split(/(?<=[.!?؟])\s+/)
