@@ -175,11 +175,12 @@ export async function chat(sessionId: string, message: string): Promise<ChatResu
     // A visitor who shows buying interest is invited, once, to leave details right here. If they show interest again, the form opens.
     const said = (text: { en: string; ar: string }) => history.some((m) => m.role === 'assistant' && (m.content.includes(text.en) || m.content.includes(text.ar)))
     // Three or more real questions about one side also count as interest, even if no single message sounded like it.
-    const engaged = history.filter((m) => m.role === 'user').length >= 2 && audience !== 'general'
-    const interested = cls.intent === 'question' && (cls.interest || engaged) && !askSide && !unanswered && !guardrailTopic
+    const engaged = history.filter((m) => m.role === 'user').length >= 2
+    const interested = cls.intent === 'question' && (cls.interest || engaged) && !askSide
     const invite = interested && !said({ en: P.TEXT.en.invite, ar: P.TEXT.ar.invite }) && !said({ en: P.TEXT.en.handoff, ar: P.TEXT.ar.handoff })
     const openForm = interested && !invite && !said({ en: P.TEXT.en.handoff, ar: P.TEXT.ar.handoff })
-    if (invite) reply = `${reply}\n\n${P.TEXT[lang].invite}`
+    // If the answer already asks for their details, the invitation is not repeated; the button is enough.
+    if (invite && !/details|بياناتك|بيانات/i.test(reply)) reply = `${reply}\n\n${P.TEXT[lang].invite}`
     if (openForm) reply = `${reply}\n\n${P.TEXT[lang].handoff}`
     return done(reply, audience, { leadForm: openForm, offerTeam: !askSide && !openForm && (unanswered || guardrailTopic || invite), askSide }, { intent: cls.intent, topScore, unanswered, tokensIn, tokensOut, chunkIds })
   } catch (err) {

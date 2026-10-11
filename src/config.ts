@@ -35,6 +35,10 @@ const schema = z.object({
   GLOBAL_CHAT_PER_MINUTE: z.coerce.number().int().default(120),
   // Serving an index that does not match the knowledge files is unsafe. Only allow it on purpose.
   ALLOW_STALE_INDEX: bool,
+  // Per-visitor caps. Raised while the host shows every visitor as one address (see TRUSTED_PROXY_HOPS): the global cap still protects the model budget.
+  CHAT_PER_IP_PER_MINUTE: z.coerce.number().int().default(40),
+  CHAT_PER_IP_PER_DAY: z.coerce.number().int().default(600),
+  LEAD_PER_IP_PER_HOUR: z.coerce.number().int().default(20),
   TOP_K: z.coerce.number().int().default(6),
 })
 

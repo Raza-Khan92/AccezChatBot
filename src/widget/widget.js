@@ -83,7 +83,7 @@
     try { localStorage.setItem('accez_sid', sid) } catch (e) { /* ignore */ }
   }
 
-  let open = false, busy = false, started = false, audience = 'general', greetEl = null
+  let open = false, busy = false, started = false, audience = 'general', greetEl = null, teamOffered = false
 
   /* ---------- rendering ---------- */
   const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
@@ -184,7 +184,7 @@
         bot(data.reply)
         if (data.actions?.leadForm) showLeadForm()
         else if (data.actions?.askSide) showSideChoices()
-        else if (data.actions?.offerTeam) offerTeam()
+        else if (data.actions?.offerTeam || teamOffered) { teamOffered = true; offerTeam() }
       }
     } catch (e) {
       typing(false)

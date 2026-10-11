@@ -73,7 +73,7 @@ app.post('/api/chat', async (c) => {
   const ip = clientIp(c)
   // The global cap stops address rotation from draining the model budget; the per-address caps stop one visitor hogging it.
   if (!allow('chat-global', config.GLOBAL_CHAT_PER_MINUTE, 60_000)) throw new HttpError(429, 'we are busy right now, please try again in a minute')
-  if (!allow(`chat:${ip}`, 20, 60_000) || !allow(`chat-day:${ip}`, 300, 86_400_000)) throw new HttpError(429, 'too many messages, please wait a moment')
+  if (!allow(`chat:${ip}`, config.CHAT_PER_IP_PER_MINUTE, 60_000) || !allow(`chat-day:${ip}`, config.CHAT_PER_IP_PER_DAY, 86_400_000)) throw new HttpError(429, 'too many messages, please wait a moment')
   const body = chatBody.safeParse(await readJson(c))
   if (!body.success) throw new HttpError(422, 'a message of 1 to 600 characters is required')
   if (!allow(`chat-session:${body.data.sessionId}`, 40, 3_600_000)) throw new HttpError(429, 'too many messages, please wait a moment')
@@ -89,7 +89,7 @@ app.get('/api/lead-token', (c) => {
 
 app.post('/api/lead', async (c) => {
   const ip = clientIp(c)
-  if (!allow(`lead:${ip}`, 5, 3_600_000)) throw new HttpError(429, 'too many requests, please try again later')
+  if (!allow(`lead:${ip}`, config.LEAD_PER_IP_PER_HOUR, 3_600_000)) throw new HttpError(429, 'too many requests, please try again later')
   const body = leadSchema.safeParse(await readJson(c))
   if (!body.success) {
     const fields = Object.keys(z.flattenError(body.error).fieldErrors)
