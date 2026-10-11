@@ -13,6 +13,7 @@ const Classification = z.object({
   intent: z.enum(['question', 'greeting', 'off_topic', 'abuse', 'wants_human', 'problem_report', 'internal', 'provided_content']),
   language: z.enum(['en', 'ar']),
   query: z.string().max(500),
+  interest: z.boolean().optional().default(false),
 })
 type Classification = z.infer<typeof Classification>
 
@@ -52,7 +53,7 @@ async function classify(message: string, history: StoredMessage[], current: Audi
       if (err instanceof GeminiError && err.status === 429) break
     }
   }
-  return { audience: current, intent: 'question', language: /[\u0600-\u06FF]/.test(message) ? 'ar' : 'en', query: message.slice(0, 400) }
+  return { audience: current, intent: 'question', language: /[\u0600-\u06FF]/.test(message) ? 'ar' : 'en', query: message.slice(0, 400), interest: false }
 }
 
 /** Gemini wants alternating roles. Merge neighbours that share one (e.g. after a failed request). */
@@ -171,7 +172,14 @@ export async function chat(sessionId: string, message: string): Promise<ChatResu
     const mayAskSide = askWhichSide && !guardrailTopic
     if (cls.intent === 'question' && !mayAskSide) reply = stripRoleQuestion(reply)
     const askSide = cls.intent === 'question' && mayAskSide && endsWithRoleQuestion(reply)
-    return done(reply, audience, { leadForm: false, offerTeam: !askSide && (unanswered || guardrailTopic), askSide }, { intent: cls.intent, topScore, unanswered, tokensIn, tokensOut, chunkIds })
+    // A visitor who shows buying interest is invited, once, to leave details right here. If they show interest again, the form opens.
+    const said = (text: { en: string; ar: string }) => history.some((m) => m.role === 'assistant' && (m.content.includes(text.en) || m.content.includes(text.ar)))
+    const interested = cls.intent === 'question' && cls.interest && !askSide && !unanswered && !guardrailTopic
+    const invite = interested && !said({ en: P.TEXT.en.invite, ar: P.TEXT.ar.invite }) && !said({ en: P.TEXT.en.handoff, ar: P.TEXT.ar.handoff })
+    const openForm = interested && !invite && !said({ en: P.TEXT.en.handoff, ar: P.TEXT.ar.handoff })
+    if (invite) reply = `${reply}\n\n${P.TEXT[lang].invite}`
+    if (openForm) reply = `${reply}\n\n${P.TEXT[lang].handoff}`
+    return done(reply, audience, { leadForm: openForm, offerTeam: !askSide && !openForm && (unanswered || guardrailTopic || invite), askSide }, { intent: cls.intent, topScore, unanswered, tokensIn, tokensOut, chunkIds })
   } catch (err) {
     if (err instanceof BudgetError || err instanceof GeminiError) {
       console.error(JSON.stringify({ evt: 'chat_error', sid: sessionId.slice(0, 8), error: err instanceof GeminiError ? err.summary : err.message.slice(0, 160) }))

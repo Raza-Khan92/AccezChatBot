@@ -19,7 +19,7 @@ Accez is one platform with two sides that connect. Property managers run their p
 
 ## Are property manager and service provider accounts separate
 
-Yes. On Accez, a service provider is its own account type, completely separate from a property manager account. Property managers sign up and sign in through the property manager portal. Service providers sign up and sign in through the provider portal. Service provider pricing is also separate from Accez property management plans. If someone runs both kinds of business and wants to know how to set that up, the Accez team can advise through the website contact form.
+Yes. On Accez, a service provider is its own account type, completely separate from a property manager account. Property managers sign up and sign in through the property manager portal. Service providers sign up and sign in through the provider portal. Service provider pricing is also separate from Accez property management plans. If someone runs both kinds of business and wants to know how to set that up, the Accez team can advise once the person shares their details in the chat.
 <!-- src: WEB-066, WEB-082, WEB-013 -->
 
 ## The property management side
@@ -34,7 +34,7 @@ On the service provider side you run your service business from one place and cu
 
 ## Is a service provider only a salon or barber
 
-No. A service provider is not only a salon or barber. It can be a pet clinic or any other service business. Accez says any independent business can list, not only property-related trades. Examples named on the Accez website include salons and barbers, spas and wellness studios, fitness coaches, photographers and home services. If you are unsure whether your kind of business fits, you can ask the Accez team through the website contact form.
+No. A service provider is not only a salon or barber. It can be a pet clinic or any other service business. Accez says any independent business can list, not only property-related trades. Examples named on the Accez website include salons and barbers, spas and wellness studios, fitness coaches, photographers and home services. If you are unsure whether your kind of business fits, the Accez team can answer once the person shares their details in the chat.
 <!-- src: owner, WEB-066 -->
 
 ## Properties and units
@@ -44,7 +44,7 @@ Accez handles both rental properties and sales properties, and each property has
 
 ## Reservations and channel connections
 
-Accez includes reservations as one of its property management areas. The property management system connects to online booking channels through RoomCloud, a channel manager built into the platform, so bookings from channels such as Airbnb, Booking.com and Expedia can be managed together. On the Professional plan, a property manager can connect up to 3 channels. For a channel that is not named here, or for how a specific connection works, the Accez team can confirm the details through the website contact form.
+Accez includes reservations as one of its property management areas. The property management system connects to online booking channels through RoomCloud, a channel manager built into the platform, so bookings from channels such as Airbnb, Booking.com and Expedia can be managed together. On the Professional plan, a property manager can connect up to 3 channels. For a channel that is not named here, or for how a specific connection works, the Accez team can confirm the details once the person shares their details in the chat.
 <!-- src: decisions D-09, WEB-001, WEB-028 -->
 
 ## Work orders and maintenance
@@ -54,12 +54,12 @@ Accez lets property managers track maintenance work orders from request to done.
 
 ## Owners, statements and payouts
 
-Accez has an owners area for property managers who manage properties on behalf of owners. It covers owner earnings, statements and payouts, with a per-owner ledger and balances, owner statements, and payout tracking from pending to paid. Accez has a dedicated Owners page on its website. Which plan includes owner-facing access can vary, so for that question please ask the Accez team through the contact form.
+Accez has an owners area for property managers who manage properties on behalf of owners. It covers owner earnings, statements and payouts, with a per-owner ledger and balances, owner statements, and payout tracking from pending to paid. Accez has a dedicated Owners page on its website. Which plan includes owner-facing access can vary, so for that question please ask the Accez team: they follow up once the person shares their details in the chat.
 <!-- src: WEB-050, WEB-052, DOC-327 -->
 
 ## Hotels and serviced apartments
 
-Accez has a Hotels and serviced apartments area with its own page on the Accez website. It supports defining room types and assigning units, with rates per type, offering extras at booking and approving them in a queue, and setting guest policies with check-in and check-out. For questions about channel connections for hotels or which plan includes this area, please contact the Accez team through the website contact form.
+Accez has a Hotels and serviced apartments area with its own page on the Accez website. It supports defining room types and assigning units, with rates per type, offering extras at booking and approving them in a queue, and setting guest policies with check-in and check-out. For questions about channel connections for hotels or which plan includes this area, the Accez team follows up once the person shares their details in the chat.
 <!-- src: WEB-027, WEB-029 -->
 
 ## Sales, projects and contracts
@@ -104,12 +104,12 @@ Service providers have three plans: Free, Starter and Growth. Starter costs SAR 
 
 ## How much does Accez cost
 
-Accez has a Free plan on both sides. Service provider paid plans are Starter at SAR 75 per month and Growth at SAR 184 per month. Property management paid plans are Basic, Professional and Enterprise. Enterprise is priced to the customer. The current prices for Basic and Professional are shown in the pricing section of the Accez website. Prices are in Saudi riyals (SAR). For a quote or detailed question, use the website contact form.
+Accez has a Free plan on both sides. Service provider paid plans are Starter at SAR 75 per month and Growth at SAR 184 per month. Property management paid plans are Basic, Professional and Enterprise. Enterprise is priced to the customer. The current prices for Basic and Professional are shown in the pricing section of the Accez website. Prices are in Saudi riyals (SAR). For a quote or detailed question, the Accez team follows up once the person shares their details in the chat.
 <!-- src: decisions D-03, decisions D-05, WEB-092, WEB-095 -->
 
 ## Free trial
 
-Accez offers a 14-day free trial. Details of how the trial starts and exactly what it includes are best confirmed with the Accez team, who can be reached through the contact form on the Accez website.
+Accez offers a 14-day free trial. Details of how the trial starts and exactly what it includes are best confirmed with the Accez team, who follow up once the person shares their details in the chat.
 <!-- src: decisions D-07 -->
 
 ## Platform fee on the Free plans
@@ -129,7 +129,7 @@ Stripe and Tap Payments are the payment providers Accez works with. Accez does n
 
 ## Languages
 
-Accez works in English and Arabic. The Arabic experience uses a right-to-left layout. The Accez website itself is also available in both languages. The sales area is described as working in Arabic and English too. If you need to know whether a specific screen or feature is available in Arabic, the Accez team can confirm through the website contact form.
+Accez works in English and Arabic. The Arabic experience uses a right-to-left layout. The Accez website itself is also available in both languages. The sales area is described as working in Arabic and English too. If you need to know whether a specific screen or feature is available in Arabic, the Accez team can confirm once the person shares their details in the chat.
 <!-- src: owner, WEB-009, WEB-047, DOC-320 -->
 
 ## Region and company
@@ -139,7 +139,7 @@ Accez is built for the Saudi Arabia market. It is operated by Cloud Valley LLC, 
 
 ## Saudi government and e-invoicing integrations
 
-Accez cannot confirm any integration with Saudi government or regulatory systems, such as Ejar, ZATCA e-invoicing, Wathq, Nafath or tourism licensing. Accez also does not make claims about security certifications or compliance standards here. For a question about whether Accez supports a specific regulatory requirement, please contact the Accez team through the contact form on the Accez website.
+Accez cannot confirm any integration with Saudi government or regulatory systems, such as Ejar, ZATCA e-invoicing, Wathq, Nafath or tourism licensing. Accez also does not make claims about security certifications or compliance standards here. For a question about whether Accez supports a specific regulatory requirement, the Accez team follows up once the person shares their details in the chat.
 <!-- src: WEB-014 -->
 
 ## Where to find the Terms
@@ -159,7 +159,7 @@ Accez publishes its Refund Policy on the Accez website. The Refund page has two 
 
 ## Request a demo or talk to sales
 
-You can ask for a demo or a sales conversation through the contact form on the Accez website. The Book a demo buttons on the site lead to that form, and the website describes the demo as a walkthrough with the Accez team in Riyadh. The form asks for your name, email, company, mobile, city and comments. Enterprise customers use the Contact Sales option, which goes to the same contact section.
+A demo or a sales conversation is arranged by sharing your details: the assistant can take your name, email, mobile and role in this chat, and the Accez team follows up. The website describes the demo as a walkthrough with the Accez team in Riyadh. Enterprise customers can also use the Contact Sales option.
 <!-- src: WEB-110, WEB-112, WEB-092 -->
 
 ## Who do I contact when something breaks or I need help?
@@ -170,7 +170,7 @@ It depends on who you are, so if the visitor has not said, ask which describes t
 
 ## Contacting support
 
-Customers can contact Accez support through the support form on the Accez website. You give your name, email, company, a subject and a description, and the team in Riyadh replies within 24 hours. Accez does not state support hours here, and does not give a phone number here. For sales or demo questions use the contact form on the website instead.
+Customers can contact Accez support through the support form on the Accez website. You give your name, email, company, a subject and a description, and the team in Riyadh replies within 24 hours. Accez does not state support hours here, and does not give a phone number here. For sales or demo questions the person shares their details in the chat instead.
 <!-- src: WEB-106, DOC-322 -->
 
 ## How to sign up and sign in
@@ -185,7 +185,7 @@ Accez runs in your web browser, so you can use it on a desktop or laptop and als
 
 ## About this assistant
 
-Accez Assistant is an automated assistant, not a person. It answers questions about Accez and hands over to the Accez team when it cannot help. You never have to use it. Please do not enter passwords, card numbers or identity document numbers into the chat. For anything it cannot answer, use the support form or the contact form on the Accez website.
+Accez Assistant is an automated assistant, not a person. It answers questions about Accez and hands over to the Accez team when it cannot help. You never have to use it. Please do not enter passwords, card numbers or identity document numbers into the chat. For anything it cannot answer, existing customers use the support form, and anyone else can share their details in the chat.
 <!-- src: WEB-113, WEB-106 -->
 
 ## Is this for me
@@ -195,7 +195,7 @@ Pick the line that fits you. If you manage properties, units, leases, reservatio
 
 ## Is Accez for hotels and serviced apartments
 
-Yes, Accez has a Hotels and serviced apartments area for property operators, with room types, rates, guest policies and check-in and check-out. Accez also serves residential communities, vacation rentals, commercial properties and owner portfolios. Whether a specific plan or a specific channel connection fits a hotel is best confirmed by the Accez team, who can be reached through the contact form on the Accez website.
+Yes, Accez has a Hotels and serviced apartments area for property operators, with room types, rates, guest policies and check-in and check-out. Accez also serves residential communities, vacation rentals, commercial properties and owner portfolios. Whether a specific plan or a specific channel connection fits a hotel is best confirmed by the Accez team, who follow up once the person shares their details in the chat.
 <!-- src: WEB-016, WEB-027, WEB-029 -->
 
 ## I am a property owner, which side is for me
@@ -215,7 +215,7 @@ Accez brings two things together on one platform. For property managers and owne
 
 ## What happens in a demo? How long is it?
 
-A demo is tailored to you. The Accez team shows you how Accez can make your work easier, based on what you want to see and your requirements, so it depends on what you would like to cover. To arrange one, share your details and the team will get in touch. You can ask for a demo through the contact form on the Accez website.
+A demo is tailored to you. The Accez team shows you how Accez can make your work easier, based on what you want to see and your requirements, so it depends on what you would like to cover. To arrange one, share your details and the team will get in touch. You can ask for a demo by sharing your details with the assistant in the chat.
 <!-- src: decisions D-27 -->
 
 ## Which companies use Accez? Can I see references or customers?

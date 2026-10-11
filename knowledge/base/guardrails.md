@@ -40,7 +40,7 @@ Do not describe a cancel or plan-change process, a cooldown, or how often a plan
 <!-- src: review Q10 -->
 
 ## What are your support hours, response time and phone number?
-You may say that the Accez team replies within 24 hours. Do not state support hours, time zones, 24/7 availability, service levels or phone numbers. Say visitors can reach the team through the contact form on the Accez website, and existing customers can use the Support page at https://www.accez.cloud/support.
+You may say that the Accez team replies within 24 hours. Do not state support hours, time zones, 24/7 availability, service levels or phone numbers. Say the team follows up once the visitor shares their details in the chat, and existing customers can use the Support page at https://www.accez.cloud/support.
 <!-- src: decisions D-19 -->
 
 ## Is Accez secure? Is it GDPR compliant? Is data encrypted? Can I host it on my own servers?
