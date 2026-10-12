@@ -18,7 +18,7 @@
       talkTeam: 'Talk to the team', rate: "You're sending messages quickly. Give me a moment and try again.",
       error: 'Something went wrong on my side. Please try again in a moment.', network: "I couldn't reach the server. Please check your connection and try again.",
       f: { first: 'First name', last: 'Last name', email: 'Email', phone: 'Phone number', iam: 'I am a', company: 'Company', city: 'City', message: 'How can we help? (optional)', submit: 'Send to the team' },
-      roles: { property_manager: 'I manage properties (property manager, landlord, hotel)', property_owner: 'I own property', service_provider: 'I run a business that takes bookings (salon, barber, clinic...)', resident_guest: "I'm a resident or guest", other: 'Something else' },
+      roles: { property_manager: 'I manage properties (property manager, landlord, hotel)', property_owner: 'I own property', service_provider: 'I run a business that takes bookings (salon, barber, clinic...)', other: 'Something else' },
       fieldNames: { firstName: 'first name', lastName: 'last name', email: 'email', phone: 'phone number', role: 'role', message: 'message' },
       retry: 'Please press the button once more.', formFail: 'We could not send that.', check: 'Please check:', formRate: 'Too many requests. Please try again later.', formConn: 'Connection problem. Please try again.',
       privacy: 'By sending your details you agree that the Accez team may contact you about your request. Your messages in this chat are stored to help us answer you.',
@@ -37,7 +37,7 @@
       talkTeam: 'تحدث مع الفريق', rate: 'ترسل الرسائل بسرعة كبيرة. انتظر لحظة ثم حاول مرة أخرى.',
       error: 'حدث خطأ من جهتنا. يُرجى المحاولة بعد قليل.', network: 'تعذّر الوصول إلى الخادم. يُرجى التحقق من اتصالك ثم المحاولة مرة أخرى.',
       f: { first: 'الاسم الأول', last: 'اسم العائلة', email: 'البريد الإلكتروني', phone: 'رقم الجوال', iam: 'أنا', company: 'الشركة', city: 'المدينة', message: 'كيف يمكننا مساعدتك؟ (اختياري)', submit: 'إرسال إلى الفريق' },
-      roles: { property_manager: 'أدير عقارات (مدير عقارات، مالك مؤجّر، فندق)', property_owner: 'أملك عقارًا', service_provider: 'لدي نشاط يقدم خدمات بالحجز (صالون، حلاق، عيادة...)', resident_guest: 'مقيم أو ضيف', other: 'غير ذلك' },
+      roles: { property_manager: 'أدير عقارات (مدير عقارات، مالك مؤجّر، فندق)', property_owner: 'أملك عقارًا', service_provider: 'لدي نشاط يقدم خدمات بالحجز (صالون، حلاق، عيادة...)', other: 'غير ذلك' },
       fieldNames: { firstName: 'الاسم الأول', lastName: 'اسم العائلة', email: 'البريد الإلكتروني', phone: 'رقم الجوال', role: 'الصفة', message: 'الرسالة' },
       retry: 'يُرجى الضغط على الزر مرة أخرى.', formFail: 'تعذّر إرسال بياناتك.', check: 'يُرجى مراجعة:', formRate: 'عدد الطلبات كبير. يُرجى المحاولة لاحقًا.', formConn: 'حدثت مشكلة في الاتصال. يُرجى المحاولة مرة أخرى.',
       privacy: 'بإرسال بياناتك فإنك توافق على أن يتواصل معك فريق أكسيز بخصوص طلبك. تُحفظ رسائلك في هذه المحادثة لمساعدتنا في الرد عليك.',
@@ -104,10 +104,11 @@
   }
   const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
   let sid = null
-  try { sid = localStorage.getItem('accez_sid') } catch (e) { /* storage blocked: session lasts for this page view */ }
+  const SID_KEY = SUPPORT ? 'accez_sid_support' : 'accez_sid'
+  try { sid = localStorage.getItem(SID_KEY) } catch (e) { /* storage blocked: session lasts for this page view */ }
   if (!sid || !UUID.test(sid)) {
     sid = newId()
-    try { localStorage.setItem('accez_sid', sid) } catch (e) { /* ignore */ }
+    try { localStorage.setItem(SID_KEY, sid) } catch (e) { /* ignore */ }
   }
 
   let open = false, busy = false, started = false, audience = 'general', greetEl = null, teamOffered = false
@@ -279,7 +280,7 @@
   }
 
   /* ---------- lead form ---------- */
-  const ROLE_FOR = { pms: 'property_manager', provider: 'service_provider', resident: 'resident_guest' }
+  const ROLE_FOR = { pms: 'property_manager', provider: 'service_provider' }
   function field(label, name, attrs = {}, required = false) {
     const wrap = document.createElement('label')
     const text = document.createElement('span')

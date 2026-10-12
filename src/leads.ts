@@ -7,7 +7,6 @@ export const ROLES = {
   property_manager: 'Property manager',
   property_owner: 'Property owner',
   service_provider: 'Service provider',
-  resident_guest: 'Resident or guest',
   other: 'Other',
 } as const
 
