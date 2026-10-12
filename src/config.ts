@@ -30,6 +30,8 @@ const schema = z.object({
   MIN_FORM_MS: z.coerce.number().int().default(3000),
   LEAD_SECRET: z.string().min(16).optional(),
   // Number of reverse proxies in front of this service. X-Forwarded-For is read from the right, never the (spoofable) left.
+  // Some hosts put the visitor's address in one dedicated header (Railway: x-real-ip). When set, it is used instead of X-Forwarded-For.
+  CLIENT_IP_HEADER: z.string().optional(),
   TRUSTED_PROXY_HOPS: z.coerce.number().int().min(1).default(1),
   // Whole-service cap on chat requests per minute, so rotating addresses cannot drain the model budget.
   GLOBAL_CHAT_PER_MINUTE: z.coerce.number().int().default(120),
@@ -49,5 +51,7 @@ if (!parsed.success) {
 }
 
 export const config = parsed.data
+// Railway documents x-real-ip as the visitor's address, so it is the default there. Set CLIENT_IP_HEADER to override or turn off with "none".
+export const clientIpHeader = (config.CLIENT_IP_HEADER ?? (process.env.RAILWAY_ENVIRONMENT_ID || process.env.RAILWAY_ENVIRONMENT_NAME ? 'x-real-ip' : '')).toLowerCase().replace(/^none$/, '')
 export const EMBED_DIMS = 768
 export const allowedOrigins = config.ALLOWED_ORIGINS.split(',').map((s) => s.trim()).filter(Boolean)

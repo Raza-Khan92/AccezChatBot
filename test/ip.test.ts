@@ -27,3 +27,15 @@ describe('rate limiter memory', () => {
     expect(allow('flood-0', 1, 60_000, t)).toBe(true)
   })
 })
+
+describe('dedicated client address header', () => {
+  it('uses the host\'s own header when it is set and proxies are trusted, ignoring a forged X-Forwarded-For', () => {
+    expect(pickClientIp('9.9.9.9, 8.8.8.8', 1, true, '10.0.0.1', '203.0.113.7')).toBe('203.0.113.7')
+  })
+  it('ignores it when proxies are not trusted', () => {
+    expect(pickClientIp(undefined, 1, false, '10.0.0.1', '203.0.113.7')).toBe('10.0.0.1')
+  })
+  it('falls back to X-Forwarded-For when the header is missing', () => {
+    expect(pickClientIp('9.9.9.9, 8.8.8.8', 1, true, '10.0.0.1', undefined)).toBe('8.8.8.8')
+  })
+})

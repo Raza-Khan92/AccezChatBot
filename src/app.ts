@@ -6,7 +6,7 @@ import { bodyLimit } from 'hono/body-limit'
 import { z } from 'zod'
 import { chat } from './chat.js'
 import { draftTicket } from './ticket.js'
-import { allowedOrigins, config } from './config.js'
+import { allowedOrigins, clientIpHeader, config } from './config.js'
 import { createLead, leadSchema } from './leads.js'
 import { GREETING } from './prompts.js'
 import { pickClientIp } from './ip.js'
@@ -42,7 +42,7 @@ app.use('*', async (c, next) => {
 function clientIp(c: Context): string {
   let socketIp: string | undefined
   try { socketIp = getConnInfo(c).remote.address } catch { socketIp = undefined }
-  return pickClientIp(c.req.header('x-forwarded-for'), config.TRUSTED_PROXY_HOPS, config.TRUST_PROXY, socketIp)
+  return pickClientIp(c.req.header('x-forwarded-for'), config.TRUSTED_PROXY_HOPS, config.TRUST_PROXY, socketIp, clientIpHeader ? c.req.header(clientIpHeader) : undefined)
 }
 
 async function readJson(c: Context): Promise<unknown> {
