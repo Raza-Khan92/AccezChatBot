@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { config } from './config.js'
-import { db, getHistory, saveLead, setLeadStatus } from './db.js'
+import { db, saveLead, setLeadStatus } from './db.js'
 import { redact } from './guard.js'
 
 export const ROLES = {
@@ -42,12 +42,11 @@ export type LeadInput = z.infer<typeof leadSchema>
  * (first_name, last_name, email, company, mobile, city, description, lead_source, recordType, oid).
  * No custom fields are invented: the visitor's role goes into description.
  */
-export function toSalesforceFields(lead: LeadInput, transcript: string): Record<string, string> {
+export function toSalesforceFields(lead: LeadInput): Record<string, string> {
   const description = [
     `Role: ${ROLES[lead.role]}`,
     lead.message ? `Message: ${redact(lead.message)}` : '',
-    `Source: Accez Assistant chatbot (session ${lead.sessionId.slice(0, 8)})`,
-    transcript ? `Recent conversation:\n${redact(transcript)}` : '',
+    'Source: Accez Assistant chatbot',
   ].filter(Boolean).join('\n').slice(0, 3000) // the live form allows 3000 characters
   return {
     oid: config.SF_OID,
@@ -63,13 +62,6 @@ export function toSalesforceFields(lead: LeadInput, transcript: string): Record<
     description,
   }
 }
-
-export function transcriptFor(sessionId: string): string {
-  return getHistory(sessionId, 6)
-    .map((m) => `${m.role === 'user' ? 'Visitor' : 'Assistant'}: ${m.content.replace(/\s+/g, ' ').slice(0, 220)}`)
-    .join('\n')
-}
-
 const SF_URL = `https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=${config.SF_OID}`
 
 /** Salesforce web-to-lead never reports delivery: a 200 or 302 only means it accepted the POST. */
@@ -97,7 +89,7 @@ export async function createLead(lead: LeadInput): Promise<LeadResult> {
   const id = saveLead(lead.sessionId, clean)
   if (!config.SALESFORCE_ENABLED) return { id, status: 'local_only', duplicate: false }
   try {
-    await postToSalesforce(toSalesforceFields(lead, transcriptFor(lead.sessionId)))
+    await postToSalesforce(toSalesforceFields(lead))
     setLeadStatus(id, 'submitted')
     return { id, status: 'submitted', duplicate: false }
   } catch (err) {
@@ -118,7 +110,7 @@ export async function retryFailedLeads(): Promise<number> {
     const parsed = leadSchema.safeParse({ ...JSON.parse(r.payload), sessionId: r.session_id })
     if (!parsed.success) { db.prepare('update leads set attempts = 5 where id = ?').run(r.id); continue }
     try {
-      await postToSalesforce(toSalesforceFields(parsed.data, transcriptFor(r.session_id)))
+      await postToSalesforce(toSalesforceFields(parsed.data))
       setLeadStatus(r.id, 'submitted')
       delivered++
     } catch (err) {

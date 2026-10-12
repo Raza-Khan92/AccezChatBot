@@ -37,7 +37,7 @@ describe('leadSchema', () => {
 
 describe('toSalesforceFields', () => {
   const lead = leadSchema.parse({ ...base, message: 'Need a demo', city: 'Riyadh' })
-  const f = toSalesforceFields(lead, 'Visitor: hi')
+  const f = toSalesforceFields(lead)
   it('uses exactly the field names of the live web-to-lead form', () => {
     expect(Object.keys(f).sort()).toEqual(
       ['city', 'company', 'description', 'email', 'first_name', 'last_name', 'lead_source', 'mobile', 'oid', 'recordType'],
@@ -46,10 +46,11 @@ describe('toSalesforceFields', () => {
     expect(f.oid).toBe('00D41000002kA0p')
     expect(f.mobile).toBe('+966 50 123 4567')
   })
-  it('puts the role, message and transcript in the description and defaults the company', () => {
+  it('puts the role and the visitor\'s own note in the description, never the chat, and defaults the company', () => {
     expect(f.description).toContain('Role: Service provider')
     expect(f.description).toContain('Message: Need a demo')
-    expect(f.description).toContain('Visitor: hi')
+    expect(f.description).not.toContain('Visitor:')
+    expect(f.description).not.toContain('Recent conversation')
     expect(f.company).toBe('Not provided')
   })
 })
