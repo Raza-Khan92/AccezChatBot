@@ -4,7 +4,7 @@ import type { Audience } from './knowledge.js'
 export type Lang = 'en' | 'ar'
 
 /** Recorded with every answer. Change it whenever a prompt or a fixed reply changes. */
-export const PROMPT_VERSION = '2026-10-12.4'
+export const PROMPT_VERSION = '2026-10-12.5'
 
 /** Fixed replies the server sends without asking the model. Arabic follows the wording of the Accez website. */
 export const TEXT: Record<Lang, { invite: string; greeting: string; busy: string; unsure: string; handoff: string; abuse: string; problem: string; internal: string; content: string }> = {
@@ -29,6 +29,24 @@ export const TEXT: Record<Lang, { invite: string; greeting: string; busy: string
     problem: 'نأسف لأنك تواجه هذه المشكلة. لا أستطيع الاطلاع على الحسابات أو معرفة ما يحدث خلف الكواليس، وأسرع طريقة لحلها هي إرسال التفاصيل إلى فريق أكسيز: ما الذي كنت تفعله وما الذي ظهر لك. يمكن للعملاء الحاليين استخدام صفحة الدعم https://www.accez.cloud/support، أو يمكنني تمرير بياناتك إلى الفريق من هنا.',
     internal: 'هذا أمر لا أستطيع مشاركته أو التعليق عليه. يسعدني مساعدتك في أسئلة المزايا والخطط وكيفية البدء مع أكسيز.',
     content: 'لا أستطيع فتح الروابط أو قراءة الملفات أو مراجعة الأكواد أو المستندات الملصقة. يسعدني مساعدتك في أسئلتك حول أكسيز.',
+  },
+}
+
+/** Wording for the logged-in support chat in the customer portals. Every hand-off ends by offering to raise a support ticket. */
+export const SUPPORT_TEXT: Record<Lang, { ticketAsk: string; handoff: string; problem: string; unsure: string; busy: string }> = {
+  en: {
+    ticketAsk: 'Would you like me to raise a support ticket so the Accez team can follow up?',
+    handoff: 'Happy to get the Accez team involved. Would you like me to raise a support ticket so they can follow up with you?',
+    problem: "I'm sorry you're running into that. I can't see accounts or check what is happening behind the scenes, so the best way to get it sorted is a support ticket for the Accez team. Would you like me to raise one?",
+    unsure: "I don't have a reliable answer to that, and I'd rather not guess. Would you like me to raise a support ticket so the Accez team can answer it properly?",
+    busy: "I'm having trouble answering right now. Would you like me to raise a support ticket so the Accez team can get back to you?",
+  },
+  ar: {
+    ticketAsk: 'هل تود أن أفتح تذكرة دعم ليتابع معك فريق أكسيز؟',
+    handoff: 'يسعدني إشراك فريق أكسيز. هل تود أن أفتح تذكرة دعم ليتواصل معك؟',
+    problem: 'نأسف لأنك تواجه هذه المشكلة. لا أستطيع الاطلاع على الحسابات أو معرفة ما يحدث خلف الكواليس، وأفضل طريقة لحلها هي تذكرة دعم لفريق أكسيز. هل تود أن أفتح واحدة؟',
+    unsure: 'ليست لدي إجابة موثوقة عن هذا السؤال، ولا أريد التخمين. هل تود أن أفتح تذكرة دعم ليجيبك فريق أكسيز بدقة؟',
+    busy: 'أواجه صعوبة في الرد الآن. هل تود أن أفتح تذكرة دعم ليتواصل معك فريق أكسيز؟',
   },
 }
 
@@ -115,6 +133,7 @@ export function buildUserTurn(opts: {
   intent: 'question' | 'greeting' | 'off_topic'
   lang: Lang
   askWhichSide?: boolean
+  support?: boolean
   context: { audience: string; kind: string; title: string; text: string }[]
   message: string
 }): string {
@@ -130,6 +149,7 @@ export function buildUserTurn(opts: {
         .join('\n\n')
     : '(nothing relevant was found)'
   return `Audience: ${label[opts.audience]}
+Visitor: ${opts.support ? 'a logged-in customer using the support chat inside their portal. Help them solve the problem using the facts. Never invite them to share details for sales and never send them to the Support page or a contact form: if you cannot solve it, the chat itself will offer to raise a support ticket.' : 'a visitor on the public website'}
 Message type: ${opts.intent}
 Reply language: ${opts.lang === 'ar' ? 'Arabic' : 'English'}
 Asking which side they are: ${opts.askWhichSide ? 'allowed, because the facts differ by side' : 'not needed, one answer fits everyone, so do not ask'}

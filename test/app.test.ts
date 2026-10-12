@@ -66,3 +66,27 @@ describe('http surface', () => {
     expect(await res.json()).toMatchObject({ fields: ['message'] })
   })
 })
+
+describe('support chat for the customer portals', () => {
+  it('serves the same chat as /support-widget in support mode, and /widget stays in sales mode', async () => {
+    const support = await (await app.request('/support-widget')).text()
+    const sales = await (await app.request('/widget')).text()
+    expect(support).toContain('data-mode="support"')
+    expect(sales).toContain('data-mode="sales"')
+  })
+  it('lets any accez.cloud address embed it, so the staging and production portals both work', async () => {
+    const csp = (await app.request('/support-widget')).headers.get('content-security-policy') ?? ''
+    expect(csp).toContain('https://*.accez.cloud')
+  })
+  it('rejects an unknown chat mode and a bad session on the ticket draft', async () => {
+    expect((await app.request('/api/chat', json({ sessionId: sid, message: 'hi', mode: 'admin' }))).status).toBe(422)
+    expect((await app.request('/api/ticket-draft', json({ sessionId: 'nope' }))).status).toBe(422)
+  })
+  it('drafts a ticket even when the conversation is empty', async () => {
+    const res = await app.request('/api/ticket-draft', json({ sessionId: '9b2f6c1e-5d4a-4e6f-9a7b-1c2d3e4f5a6b' }, '198.51.100.77'))
+    expect(res.status).toBe(200)
+    const body = (await res.json()) as { subject: string; description: string }
+    expect(body.subject).toBe('Support request from chatbot')
+    expect(body.description).toContain('portal support chat')
+  })
+})

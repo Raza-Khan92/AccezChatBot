@@ -8,7 +8,7 @@ const schema = z.object({
   EMBED_MODEL: z.string().default('gemini-embedding-2'),
   PORT: z.coerce.number().int().default(8787),
   // Origins allowed to embed the widget iframe (CSP frame-ancestors). No CORS: the widget calls its own origin.
-  ALLOWED_ORIGINS: z.string().default('https://www.accez.cloud,https://accez.cloud,http://localhost:3000'),
+  ALLOWED_ORIGINS: z.string().default('https://www.accez.cloud,https://accez.cloud,http://localhost:3000,https://*.accez.cloud'),
   DATA_DIR: z.string().default('data'),
   DB_PATH: z.string().optional(),
   // The search index is built from the knowledge files and shipped with the app (the host's disk may be wiped on restart).

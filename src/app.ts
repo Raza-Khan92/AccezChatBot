@@ -5,6 +5,7 @@ import { Hono, type Context } from 'hono'
 import { bodyLimit } from 'hono/body-limit'
 import { z } from 'zod'
 import { chat } from './chat.js'
+import { draftTicket } from './ticket.js'
 import { allowedOrigins, config } from './config.js'
 import { createLead, leadSchema } from './leads.js'
 import { GREETING } from './prompts.js'
@@ -13,8 +14,11 @@ import { allow } from './ratelimit.js'
 import { checkFormToken, issueFormToken, tooManyLinks } from './spam.js'
 
 const WIDGET_DIR = join(process.cwd(), 'src', 'widget')
+const INDEX_HTML = readFileSync(join(WIDGET_DIR, 'index.html'), 'utf8').replace('__GREETING__', GREETING)
 const assets: Record<string, { body: string; type: string }> = {
-  '/widget': { body: readFileSync(join(WIDGET_DIR, 'index.html'), 'utf8').replace('__GREETING__', GREETING), type: 'text/html; charset=utf-8' },
+  '/widget': { body: INDEX_HTML.replace('__MODE__', 'sales'), type: 'text/html; charset=utf-8' },
+  // The same chat for logged-in customers inside the portals: it raises support tickets instead of collecting sales leads.
+  '/support-widget': { body: INDEX_HTML.replace('__MODE__', 'support'), type: 'text/html; charset=utf-8' },
   '/widget.css': { body: readFileSync(join(WIDGET_DIR, 'widget.css'), 'utf8'), type: 'text/css; charset=utf-8' },
   '/widget.js': { body: readFileSync(join(WIDGET_DIR, 'widget.js'), 'utf8'), type: 'text/javascript; charset=utf-8' },
 }
@@ -52,7 +56,7 @@ app.use('/api/*', bodyLimit({ maxSize: MAX_BODY, onError: (c) => c.json({ error:
 
 for (const [path, a] of Object.entries(assets)) {
   app.get(path, (c) => {
-    c.header('Cache-Control', path === '/widget' ? 'no-cache' : 'public, max-age=300')
+    c.header('Cache-Control', path.endsWith('widget') ? 'no-cache' : 'public, max-age=300')
     return c.body(a.body, 200, { 'Content-Type': a.type })
   })
 }
@@ -66,6 +70,7 @@ app.get('/health', (c) => c.json({ ok: true }))
 
 const chatBody = z.object({
   sessionId: z.uuid(),
+  mode: z.enum(['sales', 'support']).optional(),
   message: z.string().transform((s) => s.replace(/[\u0000-\u0008\u000b-\u001f\u007f]/g, '').trim()).pipe(z.string().min(1).max(600)),
 })
 
@@ -78,7 +83,16 @@ app.post('/api/chat', async (c) => {
   if (!body.success) throw new HttpError(422, 'a message of 1 to 600 characters is required')
   if (!allow(`chat-session:${body.data.sessionId}`, 40, 3_600_000)) throw new HttpError(429, 'too many messages, please wait a moment')
   c.header('Cache-Control', 'no-store')
-  return c.json(await chat(body.data.sessionId, body.data.message))
+  return c.json(await chat(body.data.sessionId, body.data.message, body.data.mode ?? 'sales'))
+})
+
+// Subject and description for a support ticket, written from the chat so far. The portal sends the ticket itself.
+app.post('/api/ticket-draft', async (c) => {
+  if (!allow(`ticket:${clientIp(c)}`, 30, 3_600_000)) throw new HttpError(429, 'too many requests, please try again later')
+  const body = z.object({ sessionId: z.uuid() }).safeParse(await readJson(c))
+  if (!body.success) throw new HttpError(422, 'a session id is required')
+  c.header('Cache-Control', 'no-store')
+  return c.json(await draftTicket(body.data.sessionId))
 })
 
 app.get('/api/lead-token', (c) => {

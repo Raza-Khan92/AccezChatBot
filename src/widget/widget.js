@@ -48,6 +48,33 @@
   let lang = q.get('lang') === 'ar' ? 'ar' : q.get('lang') === 'en' ? 'en' : (navigator.language || '').toLowerCase().startsWith('ar') ? 'ar' : 'en'
   const t = () => STR[lang]
 
+  // Inside a customer portal the same chat raises support tickets (the portal sends them) instead of collecting sales leads.
+  const SUPPORT = app.dataset.mode === 'support'
+  const userName = (q.get('name') || '').trim().slice(0, 80)
+  const userEmail = (q.get('email') || '').trim().slice(0, 120)
+  if (SUPPORT) {
+    STR.en.greeting = userName ? `Hi ${userName}, I'm your Accez Assistant. How can I help you today?` : "Hi, I'm your Accez Assistant. How can I help you today?"
+    STR.ar.greeting = userName ? `مرحبًا ${userName}، أنا مساعد أكسيز. كيف يمكنني مساعدتك اليوم؟` : 'مرحبًا، أنا مساعد أكسيز. كيف يمكنني مساعدتك اليوم؟'
+    STR.en.chips = []
+    STR.ar.chips = []
+    Object.assign(STR.en, {
+      ticketYes: 'Yes, raise a ticket', ticketNo: 'No, thanks', ticketNoReply: 'No problem. Ask me anything else, or tell me if you change your mind.',
+      ticketRaising: "I'm raising a support ticket now. The Accez team will follow up with you shortly.",
+      ticketCreated: 'Your support ticket has been created. Our team will follow up shortly.',
+      ticketFailed: "I couldn't create the ticket automatically. Please visit the Support page.",
+      ticketSent: 'Your ticket has been submitted. Our team will follow up shortly.',
+    })
+    Object.assign(STR.ar, {
+      ticketYes: 'نعم، افتح تذكرة', ticketNo: 'لا، شكرًا', ticketNoReply: 'لا مشكلة. اسألني عن أي شيء آخر، أو أخبرني إن غيّرت رأيك.',
+      ticketRaising: 'جارٍ فتح تذكرة دعم الآن، وسيتابع معك فريق أكسيز قريبًا.',
+      ticketCreated: 'تم إنشاء تذكرة الدعم. سيتواصل معك فريقنا قريبًا.',
+      ticketFailed: 'تعذّر إنشاء التذكرة تلقائيًا. يُرجى زيارة صفحة الدعم.',
+      ticketSent: 'تم إرسال تذكرتك. سيتواصل معك فريقنا قريبًا.',
+    })
+  }
+  let ticketPending = false, awaitingTicket = null
+  const YES = /^\s*(yes|yeah|yep|ok|okay|sure|please|go ahead|raise it|نعم|ايوه|أيوه|اي|تمام|أكيد)/i
+
   function applyLang(next) {
     lang = next
     document.documentElement.lang = lang
@@ -161,6 +188,7 @@
   async function send(text) {
     text = text.trim()
     if (!text || busy) return
+    if (SUPPORT && ticketPending && YES.test(text)) { input.value = ''; user(text); raiseTicket(); return }
     busy = true
     chips.replaceChildren()
     if (/[؀-ۿ]/.test(text) && lang !== 'ar') applyLang('ar')
@@ -172,7 +200,7 @@
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ sessionId: sid, message: text }),
+        body: JSON.stringify({ sessionId: sid, message: text, ...(SUPPORT ? { mode: 'support' } : {}) }),
       })
       const data = await res.json().catch(() => ({}))
       typing(false)
@@ -182,7 +210,8 @@
         audience = data.audience || audience
         if ((data.lang === 'ar' || data.lang === 'en') && data.lang !== lang) applyLang(data.lang)
         bot(data.reply)
-        if (data.actions?.leadForm) showLeadForm()
+        if (SUPPORT) { ticketPending = Boolean(data.actions?.ticket); if (ticketPending) showTicketChoices() }
+        else if (data.actions?.leadForm) showLeadForm()
         else if (data.actions?.askSide) showSideChoices()
         else if (data.actions?.offerTeam || teamOffered) { teamOffered = true; offerTeam() }
       }
@@ -207,6 +236,37 @@
       return b
     }))
   }
+
+  function showTicketChoices() {
+    const mk = (label, fn) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = label; b.addEventListener('click', fn); return b }
+    chips.replaceChildren(
+      mk(t().ticketYes, () => { user(t().ticketYes); raiseTicket() }),
+      mk(t().ticketNo, () => { ticketPending = false; chips.replaceChildren(); user(t().ticketNo); bot(t().ticketNoReply) }),
+    )
+  }
+
+  // The portal that embeds this chat sends the ticket to Salesforce; this page only asks it to and shows the outcome.
+  const parentOrigin = (() => { try { return (location.ancestorOrigins && location.ancestorOrigins[0]) || new URL(document.referrer).origin } catch (e) { return '*' } })()
+  async function raiseTicket() {
+    ticketPending = false
+    chips.replaceChildren()
+    typing(true)
+    let draft = { subject: 'Support request from chatbot', description: '' }
+    try {
+      const res = await fetch('/api/ticket-draft', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ sessionId: sid }) })
+      if (res.ok) draft = await res.json()
+    } catch (e) { /* the team still gets a ticket, with a generic subject */ }
+    typing(false)
+    bot(t().ticketRaising)
+    awaitingTicket = setTimeout(() => { awaitingTicket = null; bot(t().ticketSent) }, 10000)
+    parent.postMessage({ type: 'create-support-ticket', data: { name: userName, email: userEmail, subject: draft.subject, description: draft.description } }, parentOrigin)
+  }
+  window.addEventListener('message', (e) => {
+    if (!SUPPORT || e.source !== parent || !e.data || e.data.type !== 'support-ticket-result' || !awaitingTicket) return
+    clearTimeout(awaitingTicket)
+    awaitingTicket = null
+    bot(e.data.success ? t().ticketCreated : t().ticketFailed)
+  })
 
   function offerTeam() {
     chips.replaceChildren()

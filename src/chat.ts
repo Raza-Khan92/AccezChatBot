@@ -21,7 +21,7 @@ export interface ChatResult {
   reply: string
   audience: Audience
   lang: Lang
-  actions: { leadForm: boolean; offerTeam: boolean; askSide?: boolean }
+  actions: { leadForm: boolean; offerTeam: boolean; askSide?: boolean; ticket?: boolean }
 }
 
 let index: Index | null = null
@@ -78,7 +78,10 @@ function problem(reply: string, grounding: string, boundary: string): string | n
   return null
 }
 
-export async function chat(sessionId: string, message: string): Promise<ChatResult> {
+export type ChatMode = 'sales' | 'support'
+
+export async function chat(sessionId: string, message: string, mode: ChatMode = 'sales'): Promise<ChatResult> {
+  const support = mode === 'support'
   const started = Date.now()
   const history = getHistory(sessionId, 8)
   const current = getSessionAudience(sessionId) as Audience
@@ -94,6 +97,17 @@ export async function chat(sessionId: string, message: string): Promise<ChatResu
     meta: MessageMeta = {},
   ): ChatResult => {
     const latencyMs = Date.now() - started
+    if (support) {
+      // Logged-in customers are never sent to a sales form: every hand-off becomes an offer to raise a support ticket.
+      const T = P.TEXT[lang], S = P.SUPPORT_TEXT[lang]
+      const wantsHuman = actions.leadForm || actions.offerTeam
+      if (reply === T.handoff) reply = S.handoff
+      else if (reply === T.problem) reply = S.problem
+      else if (reply === T.unsure) reply = S.unsure
+      else if (reply === T.busy) reply = S.busy
+      else if (wantsHuman && !reply.includes(S.ticketAsk)) reply = `${reply}\n\n${S.ticketAsk}`
+      actions = { leadForm: false, offerTeam: false, ticket: wantsHuman }
+    }
     if (lang === 'ar') reply = arabicBrand(reply)
     const audit = { model: config.CHAT_MODEL, promptVersion: P.PROMPT_VERSION, kbHash: index?.kbHash, ...meta }
     addMessage(sessionId, 'assistant', reply, { audience, latencyMs, ...audit })
@@ -136,7 +150,7 @@ export async function chat(sessionId: string, message: string): Promise<ChatResu
     const askWhichSide = audience === 'general' && (facts.some((c) => c.askSide) || (facts[0]?.audience !== 'general' && sides.size >= 2))
     const turns = alternate([
       ...history.slice(-6).map((m): Turn => ({ role: m.role === 'user' ? 'user' : 'model', text: m.content })),
-      { role: 'user', text: P.buildUserTurn({ boundary, audience, intent: cls.intent, lang, askWhichSide, context, message: clean }) },
+      { role: 'user', text: P.buildUserTurn({ boundary, audience, intent: cls.intent, lang, askWhichSide, support, context, message: clean }) },
     ])
     const grounding = [...context.map((c) => `${c.title} ${c.text}`), clean, ...history.map((m) => m.content)].join('\n')
 
@@ -176,7 +190,7 @@ export async function chat(sessionId: string, message: string): Promise<ChatResu
     const said = (text: { en: string; ar: string }) => history.some((m) => m.role === 'assistant' && (m.content.includes(text.en) || m.content.includes(text.ar)))
     // Three or more real questions about one side also count as interest, even if no single message sounded like it.
     const engaged = history.filter((m) => m.role === 'user').length >= 2
-    const interested = cls.intent === 'question' && (cls.interest || engaged) && !askSide
+    const interested = !support && cls.intent === 'question' && (cls.interest || engaged) && !askSide
     const invite = interested && !said({ en: P.TEXT.en.invite, ar: P.TEXT.ar.invite }) && !said({ en: P.TEXT.en.handoff, ar: P.TEXT.ar.handoff })
     const openForm = interested && !invite && !said({ en: P.TEXT.en.handoff, ar: P.TEXT.ar.handoff })
     // If the answer already asks for their details, the invitation is not repeated; the button is enough.
