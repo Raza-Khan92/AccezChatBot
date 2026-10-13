@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { config } from './config.js'
 import { addMessage, countLeadOffers, getHistory, getSessionAudience, hasLead, touchSession, type MessageMeta, type StoredMessage } from './db.js'
 import { BudgetError, embed, GeminiError, generate, type Turn } from './gemini.js'
-import { leadStep } from './leadpolicy.js'
+import { ackStep, leadStep } from './leadpolicy.js'
 import { arabicBrand, bannedPhrase, endsWithRoleQuestion, internalLeak, leaksScaffolding, looksLikeCodeOrFile, redact, sanitizeUserText, stripRoleQuestion, takeNoAnswer, ungroundedNumbers } from './guard.js'
 import { AUDIENCES, indexProblem, loadIndex, search, withGuardrails, type Audience, type Hit, type Index } from './knowledge.js'
 import * as P from './prompts.js'
@@ -93,11 +93,15 @@ export async function chat(sessionId: string, message: string, mode: ChatMode = 
   addMessage(sessionId, 'user', pasted ? '[pasted code, file or link: not stored]' : clean)
 
   let lang: Lang = /[\u0600-\u06FF]/.test(message) ? 'ar' : 'en'
+  // A visitor who already left their details is never sent back to the form.
+  const submitted = !support && hasLead(sessionId)
+  const ackTexts = () => [P.TEXT.en.received, P.TEXT.ar.received, P.TEXT.en.soon, P.TEXT.ar.soon]
   const done = (
     reply: string, audience: Audience, actions: ChatResult['actions'],
     meta: MessageMeta = {},
   ): ChatResult => {
     const latencyMs = Date.now() - started
+    if (submitted) actions = { ...actions, leadForm: false, offerTeam: false }
     if (support) {
       // Logged-in customers are never sent to a sales form: every hand-off becomes an offer to raise a support ticket.
       const T = P.TEXT[lang], S = P.SUPPORT_TEXT[lang]
@@ -126,7 +130,10 @@ export async function chat(sessionId: string, message: string, mode: ChatMode = 
     lang = cls.language
     touchSession(sessionId, audience)
 
-    if (cls.intent === 'wants_human') return done(P.TEXT[lang].handoff, audience, { leadForm: true, offerTeam: false }, { intent: cls.intent })
+    if (cls.intent === 'wants_human') {
+      if (submitted) return done(ackStep(countLeadOffers(sessionId, ackTexts())) === 'received' ? P.TEXT[lang].received : P.TEXT[lang].soon, audience, { leadForm: false, offerTeam: false }, { intent: cls.intent })
+      return done(P.TEXT[lang].handoff, audience, { leadForm: true, offerTeam: false }, { intent: cls.intent })
+    }
     // Problems and questions about how Accez is built never reach the model's free-text answer: fixed, safe replies only.
     if (cls.intent === 'problem_report') return done(P.TEXT[lang].problem, audience, { leadForm: false, offerTeam: true }, { intent: cls.intent })
     if (cls.intent === 'provided_content') return done(P.TEXT[lang].content, audience, { leadForm: false, offerTeam: false }, { intent: cls.intent })
@@ -200,6 +207,8 @@ export async function chat(sessionId: string, message: string, mode: ChatMode = 
       : 'none'
     const invite = step === 'invite'
     const openForm = step === 'form'
+    const ack = submitted && cls.intent === 'question' ? ackStep(countLeadOffers(sessionId, ackTexts())) : 'none'
+    if (ack !== 'none') reply = `${reply}\n\n${ack === 'received' ? P.TEXT[lang].received : P.TEXT[lang].soon}`
     // If the answer already asks for their details, the invitation is not repeated; the button is enough.
     if (invite && !/details|بياناتك|بيانات/i.test(reply)) reply = `${reply}\n\n${P.TEXT[lang].invite}`
     if (openForm) reply = `${reply}\n\n${P.TEXT[lang].handoff}`

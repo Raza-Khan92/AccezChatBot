@@ -18,3 +18,12 @@ describe('leadStep', () => {
     expect(leadStep({ offers: 1, submitted: true, interested: true })).toBe('none')
   })
 })
+
+import { ackStep } from '../src/leadpolicy.js'
+describe('ackStep', () => {
+  it('says the details were received, then that the team will get back, then nothing more', () => {
+    expect(ackStep(0)).toBe('received')
+    expect(ackStep(1)).toBe('soon')
+    expect(ackStep(2)).toBe('none')
+  })
+})

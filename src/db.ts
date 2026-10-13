@@ -121,11 +121,11 @@ export function purgeOldChats(days: number): number {
 /** How many times the assistant has already invited this visitor to leave details (the soft invitation or the form). */
 export function countLeadOffers(sessionId: string, texts: string[]): number {
   const clause = texts.map(() => 'content like ?').join(' or ')
-  const row = db.prepare(`select count(*) as n from messages where session_id = ? and role = 'assistant' and (${clause})`)
+  const row = db.prepare(`select count(*) as n from messages where session_id = ? and role = 'assistant' and created_at > datetime('now', '-1 day') and (${clause})`)
     .get(sessionId, ...texts.map((t) => `%${t}%`)) as { n: number }
   return row.n
 }
 
 export function hasLead(sessionId: string): boolean {
-  return Boolean(db.prepare('select 1 from leads where session_id = ? limit 1').get(sessionId))
+  return Boolean(db.prepare("select 1 from leads where session_id = ? and created_at > datetime('now', '-1 day') limit 1").get(sessionId))
 }

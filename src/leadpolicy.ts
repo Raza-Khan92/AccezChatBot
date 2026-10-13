@@ -11,3 +11,11 @@ export function leadStep(o: { offers: number; submitted: boolean; interested: bo
   if (o.offers === 0) return o.interested ? 'invite' : 'none'
   return 'form'
 }
+
+/**
+ * After a visitor has submitted their details they can keep asking questions and get normal answers. The first two answers
+ * after that carry a short note: the details were received, then that the team will get back to them. Nothing more after that.
+ */
+export function ackStep(acks: number): 'received' | 'soon' | 'none' {
+  return acks === 0 ? 'received' : acks === 1 ? 'soon' : 'none'
+}

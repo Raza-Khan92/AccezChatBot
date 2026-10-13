@@ -7,9 +7,11 @@ export type Lang = 'en' | 'ar'
 export const PROMPT_VERSION = '2026-10-12.5'
 
 /** Fixed replies the server sends without asking the model. Arabic follows the wording of the Accez website. */
-export const TEXT: Record<Lang, { invite: string; greeting: string; busy: string; unsure: string; handoff: string; abuse: string; problem: string; internal: string; content: string }> = {
+export const TEXT: Record<Lang, { invite: string; received: string; soon: string; greeting: string; busy: string; unsure: string; handoff: string; abuse: string; problem: string; internal: string; content: string }> = {
   en: {
     invite: "If you'd like, I can take your details here so the Accez team can follow up with you.",
+    received: 'Your details have been received, and the Accez team will be in touch with you.',
+    soon: 'The Accez team will get back to you soon.',
     greeting: "Welcome! I'm Accez Assistant, and I'm thrilled to help you today. What can I assist you with?",
     busy: "I'm having trouble answering right now. If you leave your details, the Accez team can get back to you.",
     unsure: "I don't have a reliable answer to that, and I'd rather not guess. The Accez team can answer it properly if you share your details.",
@@ -21,6 +23,8 @@ export const TEXT: Record<Lang, { invite: string; greeting: string; busy: string
   },
   ar: {
     invite: 'إذا رغبت، يمكنني أخذ بياناتك هنا ليتواصل معك فريق أكسيز.',
+    received: 'تم استلام بياناتك، وسيتواصل معك فريق أكسيز.',
+    soon: 'سيعود إليك فريق أكسيز قريبًا.',
     greeting: 'مرحبًا بك! أنا مساعد أكسيز، ويسعدني مساعدتك اليوم. كيف يمكنني خدمتك؟',
     busy: 'أواجه صعوبة في الرد الآن. إذا تركت بياناتك فسيتواصل معك فريق أكسيز.',
     unsure: 'ليست لدي إجابة موثوقة عن هذا السؤال، ولا أريد التخمين. يستطيع فريق أكسيز الإجابة بدقة إذا شاركتنا بياناتك.',
