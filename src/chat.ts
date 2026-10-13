@@ -196,7 +196,7 @@ export async function chat(sessionId: string, message: string, mode: ChatMode = 
     // If the answer already asks for their details, the invitation is not repeated; the button is enough.
     if (invite && !/details|بياناتك|بيانات/i.test(reply)) reply = `${reply}\n\n${P.TEXT[lang].invite}`
     if (openForm) reply = `${reply}\n\n${P.TEXT[lang].handoff}`
-    return done(reply, audience, { leadForm: openForm, offerTeam: !askSide && !openForm && (unanswered || guardrailTopic || invite), askSide }, { intent: cls.intent, topScore, unanswered, tokensIn, tokensOut, chunkIds })
+    return done(reply, audience, { leadForm: openForm, offerTeam: !askSide && !openForm && (unanswered || (!support && guardrailTopic) || invite), askSide }, { intent: cls.intent, topScore, unanswered, tokensIn, tokensOut, chunkIds })
   } catch (err) {
     if (err instanceof BudgetError || err instanceof GeminiError) {
       console.error(JSON.stringify({ evt: 'chat_error', sid: sessionId.slice(0, 8), error: err instanceof GeminiError ? err.summary : err.message.slice(0, 160) }))
