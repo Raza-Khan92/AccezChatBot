@@ -14,8 +14,8 @@ const SCHEMA = { type: 'OBJECT', properties: { subject: { type: 'STRING' }, summ
 export async function draftTicket(sessionId: string): Promise<TicketDraft> {
   const history = getHistory(sessionId, 10)
   const line = (m: { role: string; content: string }) => `${m.role === 'user' ? 'Customer' : 'Assistant'}: ${sanitizeUserText(redact(m.content)).replace(/\s+/g, ' ').slice(0, 400)}`
-  // The team sees only the last five messages. The summary below is written from the longer history.
-  const transcript = history.slice(-5).map(line).join('\n')
+  // The team sees only the last three messages. The summary below is written from the longer history.
+  const transcript = history.slice(-3).map(line).join('\n')
   const customerLines = history.filter((m) => m.role === 'user').map((m) => sanitizeUserText(redact(m.content)).replace(/\s+/g, ' ').trim())
   const substantive = [...customerLines].reverse().find((t) => t.length > 12 && !/^(yes|yeah|ok|okay|sure|please|نعم)/i.test(t)) ?? customerLines[customerLines.length - 1] ?? ''
   let subject = substantive.slice(0, 80) || 'Support request from chatbot'

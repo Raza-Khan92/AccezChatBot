@@ -8,16 +8,16 @@ const { addMessage } = await import('../src/db.js')
 const { draftTicket } = await import('../src/ticket.js')
 
 describe('draftTicket', () => {
-  it('sends the summary plus only the last five messages', async () => {
+  it('sends the summary plus only the last three messages', async () => {
     const sid = '7c1e2d3f-4a5b-4c6d-8e9f-0a1b2c3d4e5f'
     for (let i = 1; i <= 8; i++) addMessage(sid, i % 2 ? 'user' : 'assistant', `message number ${i}`)
     const t = await draftTicket(sid)
     expect(t.subject).toBe('Invoices not showing')
     expect(t.description).toContain('The customer cannot see invoices.')
     expect(t.description).toContain('message number 8')
-    expect(t.description).toContain('message number 4')
-    expect(t.description).not.toContain('message number 3')
-    expect((t.description.match(/message number/g) ?? []).length).toBe(5)
+    expect(t.description).toContain('message number 6')
+    expect(t.description).not.toContain('message number 5')
+    expect((t.description.match(/message number/g) ?? []).length).toBe(3)
   })
   it('sends fewer when the chat is short', async () => {
     const sid = '8d2f3e4a-5b6c-4d7e-9f0a-1b2c3d4e5f60'
