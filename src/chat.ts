@@ -1,8 +1,9 @@
 import { randomBytes } from 'node:crypto'
 import { z } from 'zod'
 import { config } from './config.js'
-import { addMessage, getHistory, getSessionAudience, touchSession, type MessageMeta, type StoredMessage } from './db.js'
+import { addMessage, countLeadOffers, getHistory, getSessionAudience, hasLead, touchSession, type MessageMeta, type StoredMessage } from './db.js'
 import { BudgetError, embed, GeminiError, generate, type Turn } from './gemini.js'
+import { leadStep } from './leadpolicy.js'
 import { arabicBrand, bannedPhrase, endsWithRoleQuestion, internalLeak, leaksScaffolding, looksLikeCodeOrFile, redact, sanitizeUserText, stripRoleQuestion, takeNoAnswer, ungroundedNumbers } from './guard.js'
 import { AUDIENCES, indexProblem, loadIndex, search, withGuardrails, type Audience, type Hit, type Index } from './knowledge.js'
 import * as P from './prompts.js'
@@ -186,13 +187,19 @@ export async function chat(sessionId: string, message: string, mode: ChatMode = 
     const mayAskSide = askWhichSide && !guardrailTopic
     if (cls.intent === 'question' && !mayAskSide) reply = stripRoleQuestion(reply)
     const askSide = cls.intent === 'question' && mayAskSide && endsWithRoleQuestion(reply)
-    // A visitor who shows buying interest is invited, once, to leave details right here. If they show interest again, the form opens.
-    const said = (text: { en: string; ar: string }) => history.some((m) => m.role === 'assistant' && (m.content.includes(text.en) || m.content.includes(text.ar)))
-    // Three or more real questions about one side also count as interest, even if no single message sounded like it.
+    // A visitor who shows buying interest is invited to leave details right here. If they carry on without filling the form,
+    // it is offered again after each answer, three times in all, and never once they have submitted it.
+    // Three or more real questions also count as interest, even if no single message sounded like it.
     const engaged = history.filter((m) => m.role === 'user').length >= 2
-    const interested = !support && cls.intent === 'question' && (cls.interest || engaged) && !askSide
-    const invite = interested && !said({ en: P.TEXT.en.invite, ar: P.TEXT.ar.invite }) && !said({ en: P.TEXT.en.handoff, ar: P.TEXT.ar.handoff })
-    const openForm = interested && !invite && !said({ en: P.TEXT.en.handoff, ar: P.TEXT.ar.handoff })
+    const step = !support && cls.intent === 'question' && !askSide
+      ? leadStep({
+          offers: countLeadOffers(sessionId, [P.TEXT.en.invite, P.TEXT.ar.invite, P.TEXT.en.handoff, P.TEXT.ar.handoff]),
+          submitted: hasLead(sessionId),
+          interested: cls.interest || engaged,
+        })
+      : 'none'
+    const invite = step === 'invite'
+    const openForm = step === 'form'
     // If the answer already asks for their details, the invitation is not repeated; the button is enough.
     if (invite && !/details|بياناتك|بيانات/i.test(reply)) reply = `${reply}\n\n${P.TEXT[lang].invite}`
     if (openForm) reply = `${reply}\n\n${P.TEXT[lang].handoff}`

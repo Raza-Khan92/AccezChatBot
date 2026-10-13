@@ -25,3 +25,18 @@ describe('draftTicket', () => {
     expect((await draftTicket(sid)).description).toContain('only one')
   })
 })
+
+describe('offer counting', () => {
+  it('counts only the assistant messages that invited the visitor, and knows when a lead was saved', async () => {
+    const { addMessage, countLeadOffers, hasLead, saveLead } = await import('../src/db.js')
+    const sid = '1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d'
+    addMessage(sid, 'user', 'if you like, I can take your details here')
+    addMessage(sid, 'assistant', 'Plans start free. If you\'d like, I can take your details here so the Accez team can follow up with you.')
+    addMessage(sid, 'assistant', 'Something else without an invitation.')
+    addMessage(sid, 'assistant', 'Happy to connect you with the Accez team. Share a few details below and someone will follow up with you.')
+    expect(countLeadOffers(sid, ["I can take your details here", 'Share a few details below'])).toBe(2)
+    expect(hasLead(sid)).toBe(false)
+    saveLead(sid, { firstName: 'A' } as never)
+    expect(hasLead(sid)).toBe(true)
+  })
+})

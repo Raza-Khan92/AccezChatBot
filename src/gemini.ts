@@ -30,6 +30,8 @@ async function post(path: string, body: unknown, attempt = 0): Promise<any> {
   const key = config.GEMINI_API_KEY
   if (!key) throw new Error('GEMINI_API_KEY is not set')
   spend()
+  // One line per model call, so the real number of calls (and so the cost) can be counted from the logs.
+  console.log(JSON.stringify({ evt: 'ai_call', kind: path.includes('embed') ? 'embed' : 'generate', attempt }))
   let res: Response
   try {
     res = await fetch(`${BASE}/${path}`, {

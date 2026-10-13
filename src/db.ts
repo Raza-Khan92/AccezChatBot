@@ -117,3 +117,15 @@ export function purgeOldChats(days: number): number {
   db.prepare(`delete from sessions where updated_at < datetime('now', ?)`).run(cutoff)
   return m.changes
 }
+
+/** How many times the assistant has already invited this visitor to leave details (the soft invitation or the form). */
+export function countLeadOffers(sessionId: string, texts: string[]): number {
+  const clause = texts.map(() => 'content like ?').join(' or ')
+  const row = db.prepare(`select count(*) as n from messages where session_id = ? and role = 'assistant' and (${clause})`)
+    .get(sessionId, ...texts.map((t) => `%${t}%`)) as { n: number }
+  return row.n
+}
+
+export function hasLead(sessionId: string): boolean {
+  return Boolean(db.prepare('select 1 from leads where session_id = ? limit 1').get(sessionId))
+}
