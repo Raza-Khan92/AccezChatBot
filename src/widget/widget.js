@@ -48,6 +48,14 @@
   let lang = q.get('lang') === 'ar' ? 'ar' : q.get('lang') === 'en' ? 'en' : (navigator.language || '').toLowerCase().startsWith('ar') ? 'ar' : 'en'
   const t = () => STR[lang]
 
+  // The website tells the widget which theme it is showing ({ type: 'accez-theme', theme: 'light' | 'dark' }). Until then the device setting decides.
+  const isTheme = (v) => v === 'light' || v === 'dark'
+  const applyTheme = (v) => { if (isTheme(v)) document.documentElement.dataset.theme = v }
+  // Embedded, it starts light unless the address says otherwise and waits for the website's message (the website also sets the frame's colour scheme to match,
+  // otherwise the browser paints a solid box behind the widget). Opened on its own, the device setting decides.
+  const embedded = window.parent !== window
+  applyTheme(isTheme(q.get('theme')) ? q.get('theme') : (!embedded && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
+
   // Inside a customer portal the same chat raises support tickets (the portal sends them) instead of collecting sales leads.
   const SUPPORT = app.dataset.mode === 'support'
   const userName = (q.get('name') || '').trim().slice(0, 80)
@@ -359,8 +367,9 @@
 
   // The host page tells the widget which language the website is showing.
   window.addEventListener('message', (e) => {
-    if (e.source !== parent || !e.data || e.data.type !== 'accez-lang') return
-    if ((e.data.lang === 'ar' || e.data.lang === 'en') && e.data.lang !== lang) applyLang(e.data.lang)
+    if (e.source !== parent || !e.data) return
+    if (e.data.type === 'accez-theme') applyTheme(e.data.theme)
+    if (e.data.type === 'accez-lang' && (e.data.lang === 'ar' || e.data.lang === 'en') && e.data.lang !== lang) applyLang(e.data.lang)
   })
 
   applyLang(lang)

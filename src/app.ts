@@ -24,6 +24,8 @@ const assets: Record<string, { body: string; type: string }> = {
 }
 
 const LOGO = readFileSync(join(WIDGET_DIR, 'logo.png'))
+// Only these four files are ever served from the fonts folder.
+const FONTS = Object.fromEntries(['inter-latin', 'cairo-arabic', 'cairo-latin', 'bricolage-latin'].map((n) => [n, readFileSync(join(WIDGET_DIR, 'fonts', `${n}.woff2`))]))
 const MAX_BODY = 8 * 1024
 const app = new Hono()
 
@@ -34,7 +36,7 @@ app.use('*', async (c, next) => {
   c.header('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
   c.header(
     'Content-Security-Policy',
-    `default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; ` +
+    `default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; font-src 'self'; ` +
       `base-uri 'none'; form-action 'none'; frame-ancestors ${allowedOrigins.join(' ') || "'none'"}`,
   )
 })
@@ -64,6 +66,13 @@ for (const [path, a] of Object.entries(assets)) {
 app.get('/logo.png', (c) => {
   c.header('Cache-Control', 'public, max-age=86400')
   return c.body(LOGO, 200, { 'Content-Type': 'image/png' })
+})
+
+app.get('/fonts/:file', (c) => {
+  const font = FONTS[c.req.param('file').replace(/\.woff2$/, '')]
+  if (!font) return c.json({ error: 'not found' }, 404)
+  c.header('Cache-Control', 'public, max-age=31536000, immutable')
+  return c.body(font, 200, { 'Content-Type': 'font/woff2' })
 })
 
 app.get('/health', (c) => c.json({ ok: true }))

@@ -90,3 +90,18 @@ describe('support chat for the customer portals', () => {
     expect(body.description).toContain('portal support chat')
   })
 })
+
+describe('widget fonts and theme', () => {
+  it('serves its own font files and nothing else from the fonts path', async () => {
+    const ok = await app.request('/fonts/cairo-arabic.woff2')
+    expect(ok.status).toBe(200)
+    expect(ok.headers.get('content-type')).toBe('font/woff2')
+    expect((await app.request('/fonts/../../package.json')).status).toBe(404)
+    expect((await app.request('/fonts/evil.woff2')).status).toBe(404)
+  })
+  it('allows fonts only from itself in the security policy', async () => {
+    const csp = (await app.request('/widget')).headers.get('content-security-policy') ?? ''
+    expect(csp).toContain("font-src 'self'")
+    expect(csp).not.toContain('fonts.googleapis')
+  })
+})
