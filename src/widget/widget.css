@@ -9,6 +9,9 @@
   --brand: #1C7AAD;
   --brand-hover: #1A74A6;
   --brand-line: #319FD4;
+  --primary: #102634;
+  --primary-hover: #1E4A63;
+  --primary-outline: transparent;
   --page: #F6F8FB;
   --panel: #FFFFFF;
   --heading: #0B1A26;
@@ -16,8 +19,8 @@
   --mute: #4E5D6C;
   --line: rgba(16, 38, 52, 0.10);
   --field-line: rgba(16, 38, 52, 0.22);
-  --accent: #1A74A6;
-  --tint: rgba(28, 122, 173, 0.08);
+  --accent: #102634;
+  --tint: rgba(16, 38, 52, 0.07);
   --danger: #B42318;
   --shadow: 0 12px 40px rgba(9, 19, 28, 0.28);
   color-scheme: light;
@@ -31,8 +34,9 @@
   --mute: #95A3B2;
   --line: rgba(255, 255, 255, 0.08);
   --field-line: rgba(255, 255, 255, 0.18);
-  --accent: #7FCDEF;
-  --tint: rgba(127, 205, 239, 0.10);
+  --accent: #8AAFC7;
+  --primary-outline: #50697A;
+  --tint: rgba(138, 175, 199, 0.12);
   --danger: #F97066;
   --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
   color-scheme: dark;
@@ -46,11 +50,11 @@ button, input, select, textarea { font: inherit; }
 .app { position: fixed; inset: 0; }
 
 .toggle {
-  position: absolute; right: 18px; bottom: 18px; width: 58px; height: 58px; border: 0; border-radius: 50%;
-  background: var(--brand); color: #fff; display: grid; place-items: center; cursor: pointer;
-  box-shadow: 0 6px 22px rgba(28, 122, 173, 0.5); transition: transform 0.15s ease, background 0.15s ease;
+  position: absolute; right: 18px; bottom: 18px; width: 58px; height: 58px; border: 1px solid var(--primary-outline); border-radius: 50%;
+  background: var(--primary); color: #fff; display: grid; place-items: center; cursor: pointer;
+  box-shadow: 0 6px 22px rgba(16, 38, 52, 0.45); transition: transform 0.15s ease, background 0.15s ease;
 }
-.toggle:hover { background: var(--brand-hover); transform: scale(1.05); }
+.toggle:hover { background: var(--primary-hover); transform: scale(1.05); }
 .toggle:focus-visible, .icon-btn:focus-visible, .send:focus-visible, .chip:focus-visible { outline: 3px solid var(--brand-line); outline-offset: 2px; }
 
 .panel {
@@ -77,7 +81,7 @@ button, input, select, textarea { font: inherit; }
 .msg ul { margin: 0; padding-left: 20px; }
 .msg a { color: inherit; text-decoration: underline; }
 .msg-bot { align-self: flex-start; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-top-left-radius: 6px; }
-.msg-user { align-self: flex-end; background: var(--brand); color: #fff; border-top-right-radius: 6px; }
+.msg-user { align-self: flex-end; background: var(--primary); color: #fff; border: 1px solid var(--primary-outline); border-top-right-radius: 6px; }
 .msg-note { align-self: center; color: var(--mute); font-size: 13px; background: none; padding: 0; }
 
 .typing { align-self: flex-start; display: flex; gap: 5px; padding: 14px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; border-top-left-radius: 6px; }
@@ -95,8 +99,8 @@ button, input, select, textarea { font: inherit; }
 .composer input { flex: 1; min-width: 0; border: 1.5px solid var(--brand-line); border-radius: 999px; padding: 12px 18px; font-size: 16px; outline: none; color: var(--text); background: var(--page); }
 .composer input::placeholder, .lead input::placeholder, .lead textarea::placeholder { color: var(--mute); opacity: 0.85; }
 .composer input:focus { box-shadow: 0 0 0 3px rgba(49, 159, 212, 0.28); }
-.send { flex: none; width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--brand); color: #fff; display: grid; place-items: center; cursor: pointer; }
-.send:hover, .lead .submit:hover { background: var(--brand-hover); }
+.send { flex: none; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--primary-outline); background: var(--primary); color: #fff; display: grid; place-items: center; cursor: pointer; }
+.send:hover, .lead .submit:hover { background: var(--primary-hover); }
 .send:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .lead { align-self: stretch; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 12px; display: grid; gap: 8px; }
@@ -106,7 +110,7 @@ button, input, select, textarea { font: inherit; }
 .lead input:focus, .lead select:focus, .lead textarea:focus { outline: 2px solid var(--brand-line); border-color: var(--brand-line); }
 .lead .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .lead .err { color: var(--danger); font-size: 13px; margin: 0; }
-.lead .submit { border: 0; background: var(--brand); color: #fff; padding: 11px 16px; border-radius: 999px; font-weight: 600; cursor: pointer; }
+.lead .submit { border: 1px solid var(--primary-outline); background: var(--primary); color: #fff; padding: 11px 16px; border-radius: 999px; font-weight: 600; cursor: pointer; }
 .lead .submit:disabled { opacity: 0.6; cursor: wait; }
 .lead .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .lead .req { color: var(--danger); font-weight: 600; }
